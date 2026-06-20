@@ -1,21 +1,17 @@
-.availability {
+.supplier-type--yes,
+.supplier-type--no {
   font-weight: 600;
   padding: 0.2rem 0.5rem;
   border-radius: 6px;
   font-size: 0.8rem;
 }
 
-.availability--in {
+.supplier-type--yes {
   color: #15803d;
   background-color: #dcfce7;
 }
 
-.availability--low {
-  color: #b45309;
-  background-color: #fef3c7;
-}
-
-.availability--out {
+.supplier-type--no {
   color: #b91c1c;
   background-color: #fee2e2;
 }

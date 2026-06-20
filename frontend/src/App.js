@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 import Inventory from './pages/Inventory';
+import Suppliers from './pages/Suppliers';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -24,6 +25,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Inventory />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/suppliers"
+          element={
+            <ProtectedRoute>
+              <Suppliers />
             </ProtectedRoute>
           }
         />

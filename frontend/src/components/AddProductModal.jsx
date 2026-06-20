@@ -3,6 +3,7 @@ import { toast } from 'sonner';
 import { createProduct } from '../api/products';
 import { getCategories, createCategory } from '../api/categories';
 import Modal from './Modal';
+import './FormModal.css';
 import './AddProductModal.css';
 
 const EMPTY_FORM = {
@@ -82,14 +83,14 @@ function AddProductModal({ onClose, onCreated }) {
 
   return (
     <Modal title="New Product" onClose={onClose}>
-      <form className="add-product-form" onSubmit={handleSubmit}>
+      <form className="form-modal" onSubmit={handleSubmit}>
         <button
           type="button"
-          className="add-product-form__image"
+          className="form-modal__image"
           onClick={() => toast.info('Fonctionnalité non disponible')}
         >
           <span>Drag image here</span>
-          <span className="add-product-form__browse">or Browse image</span>
+          <span className="form-modal__browse">or Browse image</span>
         </button>
 
         <label>
@@ -116,7 +117,7 @@ function AddProductModal({ onClose, onCreated }) {
         <label>
           Category
           {isCreatingCategory ? (
-            <div className="add-product-form__new-category">
+            <div className="form-modal__new-category">
               <input
                 type="text"
                 placeholder="Nom de la nouvelle catégorie"
@@ -210,11 +211,11 @@ function AddProductModal({ onClose, onCreated }) {
           />
         </label>
 
-        <div className="add-product-form__actions">
-          <button type="button" className="add-product-form__discard" onClick={onClose}>
+        <div className="form-modal__actions">
+          <button type="button" className="form-modal__discard" onClick={onClose}>
             Discard
           </button>
-          <button type="submit" className="add-product-form__submit" disabled={isSubmitting}>
+          <button type="submit" className="form-modal__submit" disabled={isSubmitting}>
             {isSubmitting ? 'Adding...' : 'Add Product'}
           </button>
         </div>

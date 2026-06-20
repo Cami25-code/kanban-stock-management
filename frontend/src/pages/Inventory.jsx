@@ -4,6 +4,7 @@ import { getProducts } from '../api/products';
 import AppLayout from '../components/AppLayout';
 import AddProductModal from '../components/AddProductModal';
 import { getAvailability } from '../utils/stock';
+import '../styles/DataPage.css';
 import './Inventory.css';
 
 function Inventory() {
@@ -37,15 +38,15 @@ function Inventory() {
 
   return (
     <AppLayout onSearch={setSearchTerm}>
-      <div className="inventory">
-        <div className="inventory__header">
+      <div className="data-page">
+        <div className="data-page__header">
           <h1>Products</h1>
-          <button className="inventory__add" onClick={() => setIsModalOpen(true)}>
+          <button className="data-page__add" onClick={() => setIsModalOpen(true)}>
             Add Product
           </button>
         </div>
 
-        <table className="inventory__table">
+        <table className="data-page__table">
           <thead>
             <tr>
               <th>Products</th>
@@ -95,7 +96,7 @@ function Inventory() {
           </tbody>
         </table>
 
-        <div className="inventory__pagination">
+        <div className="data-page__pagination">
           <button
             disabled={pagination.current_page <= 1}
             onClick={() => loadProducts(pagination.current_page - 1)}

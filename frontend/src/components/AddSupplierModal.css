@@ -1,0 +1,22 @@
+.form-modal__toggle {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.form-modal__toggle button {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+  color: #374151;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.form-modal__toggle button.is-active {
+  border-color: #3b5bdb;
+  background-color: #eef2ff;
+  color: #3b5bdb;
+  font-weight: 600;
+}

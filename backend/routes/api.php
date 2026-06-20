@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/ping', function () {
@@ -24,4 +25,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products/{product}', [ProductController::class, 'update']);
     Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+
+    Route::get('/suppliers', [SupplierController::class, 'index']);
+    Route::get('/suppliers/{supplier}', [SupplierController::class, 'show']);
+    Route::post('/suppliers', [SupplierController::class, 'store']);
+    Route::put('/suppliers/{supplier}', [SupplierController::class, 'update']);
+    Route::delete('/suppliers/{supplier}', [SupplierController::class, 'destroy']);
 });

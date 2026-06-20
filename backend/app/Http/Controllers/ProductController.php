@@ -9,7 +9,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return Product::with('category')->latest()->paginate(10);
+        return Product::with(['category', 'supplier'])->latest()->paginate(10);
     }
 
     public function store(Request $request)
@@ -18,6 +18,7 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'sku' => ['nullable', 'string', 'max:255'],
             'category_id' => ['required', 'exists:categories,id'],
+            'supplier_id' => ['nullable', 'exists:suppliers,id'],
             'buying_price' => ['required', 'numeric', 'min:0'],
             'selling_price' => ['required', 'numeric', 'min:0'],
             'quantity' => ['required', 'integer', 'min:0'],
@@ -27,14 +28,14 @@ class ProductController extends Controller
         ]);
 
         $product = Product::create($data);
-        $product->load('category');
+        $product->load(['category', 'supplier']);
 
         return response()->json($product, 201);
     }
 
     public function show(Product $product)
     {
-        return $product->load('category');
+        return $product->load(['category', 'supplier']);
     }
 
     public function update(Request $request, Product $product)
@@ -43,6 +44,7 @@ class ProductController extends Controller
             'name' => ['sometimes', 'string', 'max:255'],
             'sku' => ['nullable', 'string', 'max:255'],
             'category_id' => ['sometimes', 'exists:categories,id'],
+            'supplier_id' => ['nullable', 'exists:suppliers,id'],
             'buying_price' => ['sometimes', 'numeric', 'min:0'],
             'selling_price' => ['sometimes', 'numeric', 'min:0'],
             'quantity' => ['sometimes', 'integer', 'min:0'],
@@ -53,7 +55,7 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        return $product->load('category');
+        return $product->load(['category', 'supplier']);
     }
 
     public function destroy(Product $product)

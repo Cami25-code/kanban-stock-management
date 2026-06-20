@@ -1,99 +1,17 @@
-.add-product-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-}
-
-.add-product-form__image {
-  border: 1px dashed #d1d5db;
-  border-radius: 8px;
-  padding: 1.25rem;
-  background: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  color: #6b7280;
-  font-size: 0.85rem;
-}
-
-.add-product-form__browse {
-  color: #3b5bdb;
-  font-weight: 600;
-}
-
-.add-product-form label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #374151;
-}
-
-.add-product-form input,
-.add-product-form select {
-  padding: 0.55rem 0.7rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 400;
-}
-
-.add-product-form input:focus,
-.add-product-form select:focus {
-  outline: none;
-  border-color: #3b5bdb;
-}
-
-.add-product-form__new-category {
+.form-modal__new-category {
   display: flex;
   gap: 0.4rem;
 }
 
-.add-product-form__new-category input {
+.form-modal__new-category input {
   flex: 1;
 }
 
-.add-product-form__new-category button {
+.form-modal__new-category button {
   padding: 0 0.6rem;
   border-radius: 8px;
   border: 1px solid #d1d5db;
   background: #fff;
   cursor: pointer;
   font-size: 0.8rem;
-}
-
-.add-product-form__actions {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 0.5rem;
-}
-
-.add-product-form__discard,
-.add-product-form__submit {
-  flex: 1;
-  padding: 0.6rem;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-.add-product-form__discard {
-  background-color: #fff;
-  border: 1px solid #d1d5db;
-  color: #374151;
-}
-
-.add-product-form__submit {
-  background-color: #3b5bdb;
-  border: none;
-  color: #fff;
-}
-
-.add-product-form__submit:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }

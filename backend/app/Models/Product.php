@@ -11,6 +11,7 @@ class Product extends Model
         'name',
         'sku',
         'category_id',
+        'supplier_id',
         'buying_price',
         'selling_price',
         'quantity',
@@ -26,5 +27,10 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class);
     }
 }
