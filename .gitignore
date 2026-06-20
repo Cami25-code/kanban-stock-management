@@ -1,0 +1,97 @@
+# ==========================================================================
+# Secrets & environnement  (NE JAMAIS COMMITTER)
+# ==========================================================================
+.env
+.env.*
+!.env.example
+*.key
+backend/storage/*.key
+
+# ==========================================================================
+# Back-end — Laravel / PHP
+# ==========================================================================
+/backend/vendor/
+/backend/node_modules/
+/backend/public/build/
+/backend/public/hot
+/backend/public/storage
+/backend/storage/*.key
+/backend/storage/app/*
+/backend/storage/framework/cache/*
+/backend/storage/framework/sessions/*
+/backend/storage/framework/views/*
+/backend/storage/logs/*
+/backend/bootstrap/cache/*
+/backend/.phpunit.result.cache
+/backend/.phpunit.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+
+# Garder les dossiers de stockage vides mais versionnés
+!/backend/storage/app/.gitkeep
+!/backend/storage/framework/cache/.gitkeep
+!/backend/storage/framework/sessions/.gitkeep
+!/backend/storage/framework/views/.gitkeep
+!/backend/storage/logs/.gitkeep
+
+# ==========================================================================
+# Front-end — React / Node
+# ==========================================================================
+/frontend/node_modules/
+/frontend/build/
+/frontend/dist/
+/frontend/coverage/
+/frontend/.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp
+.pnp.js
+
+# ==========================================================================
+# Fichiers d'outils d'assistance / éditeurs IA  (ne pas versionner)
+# ==========================================================================
+CLAUDE.md
+.claude/
+.cursor/
+.cursorrules
+.aider*
+.continue/
+.windsurf/
+.github/copilot-instructions.md
+
+# ==========================================================================
+# Éditeurs & IDE
+# ==========================================================================
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# ==========================================================================
+# Système d'exploitation
+# ==========================================================================
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ==========================================================================
+# Docker (volumes / données locales éventuelles)
+# ==========================================================================
+docker-data/
+mysql-data/
+
+# ==========================================================================
+# Documents de référence du projet (non livrables)
+# ==========================================================================
+/*.pdf
+/IMG_*.jpg
