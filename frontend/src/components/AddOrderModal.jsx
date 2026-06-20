@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { getAllProducts } from '../api/products';
 import { getSuppliers } from '../api/suppliers';
+import { getStores } from '../api/stores';
 import { createOrder } from '../api/orders';
 import Modal from './Modal';
 import './FormModal.css';
@@ -9,6 +10,7 @@ import './FormModal.css';
 const EMPTY_FORM = {
   product_id: '',
   supplier_id: '',
+  store_id: '',
   quantity: '',
   expected_date: '',
 };
@@ -16,6 +18,7 @@ const EMPTY_FORM = {
 function AddOrderModal({ onClose, onCreated }) {
   const [products, setProducts] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
+  const [stores, setStores] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState(EMPTY_FORM);
 
@@ -26,6 +29,9 @@ function AddOrderModal({ onClose, onCreated }) {
     getSuppliers()
       .then((response) => setSuppliers(response.data))
       .catch(() => toast.error('Impossible de charger les fournisseurs'));
+    getStores()
+      .then((response) => setStores(response.data))
+      .catch(() => toast.error('Impossible de charger les magasins'));
   }, []);
 
   const selectedProduct = products.find((product) => product.id === Number(form.product_id));
@@ -95,6 +101,20 @@ function AddOrderModal({ onClose, onCreated }) {
               {suppliers.map((supplier) => (
                 <option key={supplier.id} value={supplier.id}>
                   {supplier.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+
+        {stores.length > 0 && (
+          <label>
+            Deliver to (optional)
+            <select value={form.store_id} onChange={handleChange('store_id')}>
+              <option value="">No specific store</option>
+              {stores.map((store) => (
+                <option key={store.id} value={store.id}>
+                  {store.name}
                 </option>
               ))}
             </select>

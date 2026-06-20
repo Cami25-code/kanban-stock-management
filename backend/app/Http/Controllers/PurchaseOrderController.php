@@ -28,6 +28,7 @@ class PurchaseOrderController extends Controller
         $data = $request->validate([
             'product_id' => ['required', 'exists:products,id'],
             'supplier_id' => ['nullable', 'exists:suppliers,id'],
+            'store_id' => ['nullable', 'exists:stores,id'],
             'quantity' => ['required', 'integer', 'min:1'],
             'expected_date' => ['nullable', 'date'],
         ]);
@@ -45,20 +46,21 @@ class PurchaseOrderController extends Controller
         $order = PurchaseOrder::create([
             'product_id' => $product->id,
             'supplier_id' => $supplierId,
+            'store_id' => $data['store_id'] ?? null,
             'quantity' => $data['quantity'],
             'order_value' => $data['quantity'] * $product->buying_price,
             'expected_date' => $data['expected_date'] ?? null,
             'status' => PurchaseOrder::STATUS_CONFIRMED,
         ]);
 
-        $order->load(['product.category', 'supplier']);
+        $order->load(['product.category', 'supplier', 'store']);
 
         return response()->json($order, 201);
     }
 
     public function show(PurchaseOrder $order)
     {
-        return $order->load(['product.category', 'supplier']);
+        return $order->load(['product.category', 'supplier', 'store']);
     }
 
     public function update(Request $request, PurchaseOrder $order)
@@ -75,13 +77,28 @@ class PurchaseOrderController extends Controller
 
         if ($data['status'] === PurchaseOrder::STATUS_DELIVERED && ! $order->received) {
             $order->product->increment('quantity', $order->quantity);
+
+            if ($order->store_id) {
+                $existingPivot = $order->product->stores()
+                    ->where('store_id', $order->store_id)
+                    ->first();
+
+                if ($existingPivot) {
+                    $order->product->stores()->updateExistingPivot($order->store_id, [
+                        'quantity' => $existingPivot->pivot->quantity + $order->quantity,
+                    ]);
+                } else {
+                    $order->product->stores()->attach($order->store_id, ['quantity' => $order->quantity]);
+                }
+            }
+
             $order->received = true;
         }
 
         $order->status = $data['status'];
         $order->save();
 
-        return $order->load(['product.category', 'supplier']);
+        return $order->load(['product.category', 'supplier', 'store']);
     }
 
     public function destroy(PurchaseOrder $order)

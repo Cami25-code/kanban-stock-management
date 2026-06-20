@@ -21,6 +21,7 @@ class ProductController extends Controller
             'sku' => ['nullable', 'string', 'max:255'],
             'category_id' => ['required', 'exists:categories,id'],
             'supplier_id' => ['nullable', 'exists:suppliers,id'],
+            'store_id' => ['nullable', 'exists:stores,id'],
             'buying_price' => ['required', 'numeric', 'min:0'],
             'selling_price' => ['required', 'numeric', 'min:0'],
             'quantity' => ['required', 'integer', 'min:0'],
@@ -29,15 +30,23 @@ class ProductController extends Controller
             'expiry_date' => ['nullable', 'date'],
         ]);
 
+        $storeId = $data['store_id'] ?? null;
+        unset($data['store_id']);
+
         $product = Product::create($data);
-        $product->load(['category', 'supplier']);
+
+        if ($storeId) {
+            $product->stores()->attach($storeId, ['quantity' => $product->quantity]);
+        }
+
+        $product->load(['category', 'supplier', 'stores']);
 
         return response()->json($product, 201);
     }
 
     public function show(Product $product)
     {
-        return $product->load(['category', 'supplier']);
+        return $product->load(['category', 'supplier', 'stores']);
     }
 
     public function update(Request $request, Product $product)

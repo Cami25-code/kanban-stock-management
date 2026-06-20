@@ -3,8 +3,10 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 import Inventory from './pages/Inventory';
+import ProductDetail from './pages/ProductDetail';
 import Suppliers from './pages/Suppliers';
 import Orders from './pages/Orders';
+import ManageStore from './pages/ManageStore';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -38,10 +40,26 @@ function App() {
           }
         />
         <Route
+          path="/inventory/:productId"
+          element={
+            <ProtectedRoute>
+              <ProductDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/orders"
           element={
             <ProtectedRoute>
               <Orders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/manage-store"
+          element={
+            <ProtectedRoute>
+              <ManageStore />
             </ProtectedRoute>
           }
         />

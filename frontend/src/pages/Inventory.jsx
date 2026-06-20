@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { getProducts } from '../api/products';
 import AppLayout from '../components/AppLayout';
@@ -71,7 +72,9 @@ function Inventory() {
                 const availability = getAvailability(product.quantity, product.threshold);
                 return (
                   <tr key={product.id}>
-                    <td>{product.name}</td>
+                    <td>
+                      <Link to={`/inventory/${product.id}`}>{product.name}</Link>
+                    </td>
                     <td>₹{product.buying_price}</td>
                     <td>
                       {product.quantity} {product.unit || ''}

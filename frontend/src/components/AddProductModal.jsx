@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { createProduct } from '../api/products';
 import { getCategories, createCategory } from '../api/categories';
+import { getStores } from '../api/stores';
 import Modal from './Modal';
 import './FormModal.css';
 import './AddProductModal.css';
@@ -16,10 +17,12 @@ const EMPTY_FORM = {
   unit: '',
   expiry_date: '',
   threshold: '',
+  store_id: '',
 };
 
 function AddProductModal({ onClose, onCreated }) {
   const [categories, setCategories] = useState([]);
+  const [stores, setStores] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCreatingCategory, setIsCreatingCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState('');
@@ -29,6 +32,9 @@ function AddProductModal({ onClose, onCreated }) {
     getCategories()
       .then((response) => setCategories(response.data))
       .catch(() => toast.error('Impossible de charger les catégories'));
+    getStores()
+      .then((response) => setStores(response.data))
+      .catch(() => toast.error('Impossible de charger les magasins'));
   }, []);
 
   const handleChange = (field) => (event) => {
@@ -210,6 +216,20 @@ function AddProductModal({ onClose, onCreated }) {
             required
           />
         </label>
+
+        {stores.length > 0 && (
+          <label>
+            Store (optional)
+            <select value={form.store_id} onChange={handleChange('store_id')}>
+              <option value="">No store / global stock</option>
+              {stores.map((store) => (
+                <option key={store.id} value={store.id}>
+                  {store.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
 
         <div className="form-modal__actions">
           <button type="button" className="form-modal__discard" onClick={onClose}>

@@ -12,7 +12,7 @@ const NAV_ITEMS = [
   { label: 'Reports', to: null },
   { label: 'Suppliers', to: '/suppliers' },
   { label: 'Orders', to: '/orders' },
-  { label: 'Manage Store', to: null },
+  { label: 'Manage Store', to: '/manage-store' },
 ];
 
 function Sidebar() {

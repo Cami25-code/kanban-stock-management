@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +39,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/orders', [PurchaseOrderController::class, 'store']);
     Route::put('/orders/{order}', [PurchaseOrderController::class, 'update']);
     Route::delete('/orders/{order}', [PurchaseOrderController::class, 'destroy']);
+
+    Route::get('/stores', [StoreController::class, 'index']);
+    Route::post('/stores', [StoreController::class, 'store']);
+    Route::put('/stores/{store}', [StoreController::class, 'update']);
 });
