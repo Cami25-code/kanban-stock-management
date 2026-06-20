@@ -3,6 +3,13 @@
   max-width: 360px;
 }
 
+.auth-form__icon {
+  display: block;
+  width: 48px;
+  height: auto;
+  margin: 0 auto 1rem;
+}
+
 .auth-form__title {
   font-size: 1.5rem;
   font-weight: 700;

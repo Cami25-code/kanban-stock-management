@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { register } from '../api/auth';
 import { authTokenState, currentUserState } from '../state/atoms';
 import AuthLayout from '../components/AuthLayout';
+import logoIcon from '../assets/logo-kanban-icon.png';
 import './AuthForm.css';
 
 function SignUp() {
@@ -41,6 +42,7 @@ function SignUp() {
   return (
     <AuthLayout>
       <form className="auth-form" onSubmit={handleSubmit}>
+        <img src={logoIcon} alt="Kanban" className="auth-form__icon" />
         <h1 className="auth-form__title">Create an account</h1>
         <p className="auth-form__subtitle">Start your 30-day free trial.</p>
 
