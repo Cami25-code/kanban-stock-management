@@ -1,29 +1,25 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
-import api from './api/axios';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import Home from './pages/Home';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
-  const [pingResult, setPingResult] = useState(null);
-
-  useEffect(() => {
-    api
-      .get('/ping')
-      .then((response) => {
-        setPingResult(response.data);
-        toast.success('Connexion au back-end réussie');
-      })
-      .catch(() => {
-        setPingResult({ error: true });
-        toast.error('Impossible de contacter le back-end');
-      });
-  }, []);
-
   return (
-    <div className="App">
-      <h1>Kanban Stock</h1>
-      <p>Test de connexion à l'API : {JSON.stringify(pingResult)}</p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

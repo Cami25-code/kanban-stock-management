@@ -1,0 +1,13 @@
+.home {
+  padding: 2rem;
+}
+
+.home button {
+  margin-top: 1rem;
+  padding: 0.5rem 1.25rem;
+  background-color: #3b5bdb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
