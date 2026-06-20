@@ -11,7 +11,7 @@ const NAV_ITEMS = [
   { label: 'Inventory', to: '/inventory' },
   { label: 'Reports', to: null },
   { label: 'Suppliers', to: '/suppliers' },
-  { label: 'Orders', to: null },
+  { label: 'Orders', to: '/orders' },
   { label: 'Manage Store', to: null },
 ];
 

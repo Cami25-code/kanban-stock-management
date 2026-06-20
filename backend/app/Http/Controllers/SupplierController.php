@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PurchaseOrder;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,13 @@ class SupplierController extends Controller
 {
     public function index()
     {
-        return Supplier::with('products')->get();
+        return Supplier::with('products')->get()->map(function (Supplier $supplier) {
+            $supplier->on_the_way = PurchaseOrder::where('supplier_id', $supplier->id)
+                ->whereNotIn('status', [PurchaseOrder::STATUS_DELIVERED, PurchaseOrder::STATUS_RETURNED])
+                ->sum('quantity');
+
+            return $supplier;
+        });
     }
 
     public function store(Request $request)

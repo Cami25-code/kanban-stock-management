@@ -25,7 +25,7 @@ function Suppliers() {
   }, []);
 
   const handleCreated = (supplier) => {
-    setSuppliers((prev) => [{ ...supplier, products: [] }, ...prev]);
+    setSuppliers((prev) => [{ ...supplier, products: [], on_the_way: 0 }, ...prev]);
   };
 
   const filteredSuppliers = suppliers.filter((supplier) =>
@@ -78,7 +78,7 @@ function Suppliers() {
                       {supplier.takes_back_returns ? 'Taking Return' : 'Not Taking Return'}
                     </span>
                   </td>
-                  <td>-</td>
+                  <td>{supplier.on_the_way ?? '-'}</td>
                 </tr>
               ))
             )}

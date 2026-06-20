@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,4 +32,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/suppliers', [SupplierController::class, 'store']);
     Route::put('/suppliers/{supplier}', [SupplierController::class, 'update']);
     Route::delete('/suppliers/{supplier}', [SupplierController::class, 'destroy']);
+
+    Route::get('/orders', [PurchaseOrderController::class, 'index']);
+    Route::get('/orders/{order}', [PurchaseOrderController::class, 'show']);
+    Route::post('/orders', [PurchaseOrderController::class, 'store']);
+    Route::put('/orders/{order}', [PurchaseOrderController::class, 'update']);
+    Route::delete('/orders/{order}', [PurchaseOrderController::class, 'destroy']);
 });

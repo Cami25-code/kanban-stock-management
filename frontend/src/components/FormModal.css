@@ -48,6 +48,12 @@
   border-color: #3b5bdb;
 }
 
+.form-modal__hint {
+  margin: -0.5rem 0 0;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
 .form-modal__actions {
   display: flex;
   gap: 0.75rem;

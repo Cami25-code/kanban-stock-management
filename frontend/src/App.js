@@ -4,6 +4,7 @@ import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 import Inventory from './pages/Inventory';
 import Suppliers from './pages/Suppliers';
+import Orders from './pages/Orders';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -33,6 +34,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Suppliers />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute>
+              <Orders />
             </ProtectedRoute>
           }
         />
