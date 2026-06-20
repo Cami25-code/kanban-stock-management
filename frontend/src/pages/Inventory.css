@@ -1,0 +1,90 @@
+.inventory {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.inventory__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.inventory__header h1 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.inventory__add {
+  padding: 0.5rem 1.1rem;
+  background-color: #3b5bdb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.inventory__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.inventory__table th {
+  text-align: left;
+  color: #6b7280;
+  font-weight: 600;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.inventory__table td {
+  padding: 0.7rem 0.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.availability {
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.availability--in {
+  color: #15803d;
+  background-color: #dcfce7;
+}
+
+.availability--low {
+  color: #b45309;
+  background-color: #fef3c7;
+}
+
+.availability--out {
+  color: #b91c1c;
+  background-color: #fee2e2;
+}
+
+.inventory__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+}
+
+.inventory__pagination button {
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.inventory__pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
