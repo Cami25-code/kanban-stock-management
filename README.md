@@ -39,7 +39,7 @@ Application web de gestion de stock de type Kanban : inventaire, fournisseurs, c
 
 ## Prérequis
 
-- PHP 8.1+ et Composer
+- PHP 8.2+ et Composer
 - Node.js 16+ et npm
 - MySQL 5.7+ (ou via Docker)
 - Docker & Docker Compose (pour le déploiement conteneurisé)
@@ -103,15 +103,31 @@ Créer le compte administrateur via la page d'inscription une fois l'application
 
 | Ressource | Routes |
 |-----------|--------|
-| Authentification | `POST /api/register`, `POST /api/login`, `POST /api/logout` |
-| Catégories | `GET/POST /api/categories`, `PUT/DELETE /api/categories/{id}` |
-| Produits | `GET/POST /api/products`, `GET/PUT/DELETE /api/products/{id}` |
-| Fournisseurs | `GET/POST /api/suppliers`, `GET/PUT/DELETE /api/suppliers/{id}` |
-| Commandes | `GET/POST /api/orders`, `PUT /api/orders/{id}` |
-| Magasins | `GET/POST /api/stores`, `GET/PUT/DELETE /api/stores/{id}` |
-| Tableau de bord / Stats | `GET /api/dashboard`, `GET /api/stats/...` |
+| Authentification | `POST /api/register`, `POST /api/login`, `POST /api/logout`, `GET /api/user` |
+| Catégories | `GET /api/categories`, `POST /api/categories` |
+| Produits | `GET /api/products`, `GET /api/products/{id}`, `POST /api/products`, `PUT /api/products/{id}`, `DELETE /api/products/{id}` |
+| Fournisseurs | `GET /api/suppliers`, `GET /api/suppliers/{id}`, `POST /api/suppliers`, `PUT /api/suppliers/{id}`, `DELETE /api/suppliers/{id}` |
+| Commandes | `GET /api/orders`, `GET /api/orders/{id}`, `POST /api/orders`, `PUT /api/orders/{id}`, `DELETE /api/orders/{id}` |
+| Magasins | `GET /api/stores`, `POST /api/stores`, `PUT /api/stores/{id}` |
+| Ventes | `POST /api/sales` |
+| Tableau de bord | `GET /api/dashboard`, `GET /api/stats/sales-vs-purchases`, `GET /api/stats/orders-summary`, `GET /api/stats/top-products`, `GET /api/stats/low-stock` |
+| Rapports | `GET /api/reports/overview`, `GET /api/reports/best-categories`, `GET /api/reports/profit-vs-revenue`, `GET /api/reports/best-products` |
 
 Toutes les routes, sauf l'authentification, requièrent un token Bearer valide.
+
+---
+
+## Communication front-end ↔ back-end
+
+- **URL de base** : `frontend/src/api/axios.js` définit une instance Axios unique (`REACT_APP_API_URL`, par défaut `http://localhost:8000/api`). Toutes les requêtes passent par cette instance, jamais par `axios` directement.
+- **Authentification** : après connexion, le token Sanctum est stocké dans l'atom Recoil `authTokenState` (persisté en `localStorage` via un effet d'atome). Un intercepteur de requête y attache automatiquement l'en-tête `Authorization: Bearer ...`. Un intercepteur de réponse détecte les `401` sur une requête authentifiée, vide la session et redirige vers `/login` avec un toast.
+- **Organisation des fichiers** :
+  - `src/api/` — un fichier par ressource (`products.js`, `suppliers.js`, `orders.js`...), chacun n'exportant que de simples fonctions qui retournent une promesse Axios.
+  - `src/state/` — les atomes Recoil globaux (auth).
+  - `src/components/` — composants réutilisables (layout, modals de formulaire).
+  - `src/pages/` — une page par route, qui orchestre les appels API et les composants.
+- **Chargement des données** : chaque page déclenche ses appels `GET` dans un `useEffect` au montage. Les pages combinant plusieurs sources (Dashboard, Reports) utilisent `Promise.all` pour paralléliser les requêtes plutôt que de les enchaîner.
+- **Retour utilisateur** : succès et erreurs sont systématiquement notifiés via Sonner (`toast.success`/`toast.error`). Les erreurs de validation (422) affichent le premier message renvoyé par Laravel.
 
 ---
 

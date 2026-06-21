@@ -32,23 +32,31 @@ function Dashboard() {
   const [topProducts, setTopProducts] = useState([]);
   const [lowStock, setLowStock] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const loadAll = () => {
-    getDashboardSummary()
-      .then((response) => setSummary(response.data))
-      .catch(() => toast.error('Impossible de charger les indicateurs'));
-    getSalesVsPurchases()
-      .then((response) => setSalesVsPurchases(response.data))
-      .catch(() => toast.error('Impossible de charger le graphique ventes/achats'));
-    getOrdersSummary()
-      .then((response) => setOrdersSummary(response.data))
-      .catch(() => toast.error('Impossible de charger le graphique des commandes'));
-    getTopProducts(3)
-      .then((response) => setTopProducts(response.data))
-      .catch(() => toast.error('Impossible de charger les meilleures ventes'));
-    getLowStock(5)
-      .then((response) => setLowStock(response.data))
-      .catch(() => toast.error('Impossible de charger le stock faible'));
+  const loadAll = async () => {
+    setIsLoading(true);
+
+    try {
+      const [summaryRes, salesVsPurchasesRes, ordersSummaryRes, topProductsRes, lowStockRes] =
+        await Promise.all([
+          getDashboardSummary(),
+          getSalesVsPurchases(),
+          getOrdersSummary(),
+          getTopProducts(3),
+          getLowStock(5),
+        ]);
+
+      setSummary(summaryRes.data);
+      setSalesVsPurchases(salesVsPurchasesRes.data);
+      setOrdersSummary(ordersSummaryRes.data);
+      setTopProducts(topProductsRes.data);
+      setLowStock(lowStockRes.data);
+    } catch {
+      toast.error('Impossible de charger le tableau de bord');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -65,6 +73,9 @@ function Dashboard() {
           </button>
         </div>
 
+        {isLoading && !summary ? (
+          <p className="dashboard__empty">Chargement du tableau de bord...</p>
+        ) : (
         <div className="dashboard__grid">
           <div className="dashboard__card">
             <h2>Sales Overview</h2>
@@ -218,6 +229,7 @@ function Dashboard() {
             )}
           </div>
         </div>
+        )}
       </div>
 
       {isModalOpen && (

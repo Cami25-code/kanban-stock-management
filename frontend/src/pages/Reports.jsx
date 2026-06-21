@@ -25,21 +25,42 @@ function Reports() {
   const [bestCategories, setBestCategories] = useState([]);
   const [profitVsRevenue, setProfitVsRevenue] = useState([]);
   const [bestProducts, setBestProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getReportsOverview()
-      .then((response) => setOverview(response.data))
-      .catch(() => toast.error('Impossible de charger les indicateurs'));
-    getBestCategories()
-      .then((response) => setBestCategories(response.data))
-      .catch(() => toast.error('Impossible de charger les meilleures catégories'));
-    getProfitVsRevenue()
-      .then((response) => setProfitVsRevenue(response.data))
-      .catch(() => toast.error('Impossible de charger le graphique profit/revenue'));
-    getBestProducts()
-      .then((response) => setBestProducts(response.data))
-      .catch(() => toast.error('Impossible de charger les meilleurs produits'));
+    async function loadReports() {
+      setIsLoading(true);
+
+      try {
+        const [overviewRes, bestCategoriesRes, profitVsRevenueRes, bestProductsRes] =
+          await Promise.all([
+            getReportsOverview(),
+            getBestCategories(),
+            getProfitVsRevenue(),
+            getBestProducts(),
+          ]);
+
+        setOverview(overviewRes.data);
+        setBestCategories(bestCategoriesRes.data);
+        setProfitVsRevenue(profitVsRevenueRes.data);
+        setBestProducts(bestProductsRes.data);
+      } catch {
+        toast.error('Impossible de charger les rapports');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadReports();
   }, []);
+
+  if (isLoading && !overview) {
+    return (
+      <AppLayout>
+        <p className="reports__empty">Chargement des rapports...</p>
+      </AppLayout>
+    );
+  }
 
   return (
     <AppLayout>
