@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
@@ -43,4 +45,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/stores', [StoreController::class, 'index']);
     Route::post('/stores', [StoreController::class, 'store']);
     Route::put('/stores/{store}', [StoreController::class, 'update']);
+
+    Route::post('/sales', [SaleController::class, 'store']);
+
+    Route::get('/dashboard', [DashboardController::class, 'summary']);
+    Route::get('/stats/sales-vs-purchases', [DashboardController::class, 'salesVsPurchases']);
+    Route::get('/stats/orders-summary', [DashboardController::class, 'ordersSummary']);
+    Route::get('/stats/top-products', [DashboardController::class, 'topProducts']);
+    Route::get('/stats/low-stock', [DashboardController::class, 'lowStock']);
 });

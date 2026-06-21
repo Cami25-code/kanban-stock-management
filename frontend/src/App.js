@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 import Inventory from './pages/Inventory';
 import ProductDetail from './pages/ProductDetail';
 import Suppliers from './pages/Suppliers';
@@ -19,7 +19,7 @@ function App() {
           path="/"
           element={
             <ProtectedRoute>
-              <Home />
+              <Dashboard />
             </ProtectedRoute>
           }
         />

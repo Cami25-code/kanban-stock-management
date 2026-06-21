@@ -6,7 +6,7 @@ import AppLayout from '../components/AppLayout';
 import AddProductModal from '../components/AddProductModal';
 import { getAvailability } from '../utils/stock';
 import '../styles/DataPage.css';
-import './Inventory.css';
+import '../styles/Availability.css';
 
 function Inventory() {
   const [products, setProducts] = useState([]);
