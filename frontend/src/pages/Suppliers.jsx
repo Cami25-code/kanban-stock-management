@@ -16,7 +16,7 @@ function Suppliers() {
     setIsLoading(true);
     getSuppliers()
       .then((response) => setSuppliers(response.data))
-      .catch(() => toast.error('Impossible de charger les fournisseurs'))
+      .catch(() => toast.error('Unable to load suppliers'))
       .finally(() => setIsLoading(false));
   };
 
@@ -56,11 +56,11 @@ function Suppliers() {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={6}>Chargement...</td>
+                <td colSpan={6}>Loading...</td>
               </tr>
             ) : filteredSuppliers.length === 0 ? (
               <tr>
-                <td colSpan={6}>Aucun fournisseur pour le moment.</td>
+                <td colSpan={6}>No suppliers yet.</td>
               </tr>
             ) : (
               filteredSuppliers.map((supplier) => (

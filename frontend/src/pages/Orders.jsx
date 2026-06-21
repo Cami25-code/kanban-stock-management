@@ -27,7 +27,7 @@ function Orders() {
           last_page: response.data.last_page,
         });
       })
-      .catch(() => toast.error('Impossible de charger les commandes'))
+      .catch(() => toast.error('Unable to load orders'))
       .finally(() => setIsLoading(false));
   };
 
@@ -40,11 +40,11 @@ function Orders() {
     try {
       await updateOrderStatus(order.id, status);
       toast.success(
-        status === 'Delivered' ? 'Commande marquée comme livrée' : 'Commande marquée comme retournée'
+        status === 'Delivered' ? 'Order marked as delivered' : 'Order marked as returned'
       );
       loadOrders(pagination.current_page, showHistory);
     } catch {
-      toast.error('Impossible de mettre à jour la commande');
+      toast.error('Unable to update the order');
     }
   };
 
@@ -86,11 +86,11 @@ function Orders() {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={7}>Chargement...</td>
+                <td colSpan={7}>Loading...</td>
               </tr>
             ) : filteredOrders.length === 0 ? (
               <tr>
-                <td colSpan={7}>Aucune commande pour le moment.</td>
+                <td colSpan={7}>No orders yet.</td>
               </tr>
             ) : (
               filteredOrders.map((order) => (

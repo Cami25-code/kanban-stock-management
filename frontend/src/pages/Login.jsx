@@ -25,10 +25,10 @@ function Login() {
       const response = await login({ email, password });
       setAuthToken(response.data.token);
       setCurrentUser(response.data.user);
-      toast.success('Connexion réussie');
+      toast.success('Logged in successfully');
       navigate('/');
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Identifiants invalides');
+      toast.error(error.response?.data?.message || 'Invalid credentials');
     } finally {
       setIsSubmitting(false);
     }
@@ -73,7 +73,7 @@ function Login() {
           <button
             type="button"
             className="auth-form__link"
-            onClick={() => toast.info('Fonctionnalité non disponible')}
+            onClick={() => toast.info('Feature not available')}
           >
             Forgot password
           </button>
@@ -86,7 +86,7 @@ function Login() {
         <button
           type="button"
           className="auth-form__google"
-          onClick={() => toast.info('Fonctionnalité non disponible')}
+          onClick={() => toast.info('Feature not available')}
         >
           Sign in with Google
         </button>

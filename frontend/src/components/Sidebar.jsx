@@ -27,7 +27,7 @@ function Sidebar() {
     }
     resetAuthToken();
     resetCurrentUser();
-    toast.success('Déconnexion réussie');
+    toast.success('Logged out successfully');
   };
 
   return (
@@ -54,7 +54,7 @@ function Sidebar() {
               key={item.label}
               type="button"
               className="sidebar__link sidebar__link--inert"
-              onClick={() => toast.info('Disponible dans une prochaine étape')}
+              onClick={() => toast.info('Coming in a future step')}
             >
               {item.label}
             </button>
@@ -66,7 +66,7 @@ function Sidebar() {
         <button
           type="button"
           className="sidebar__link sidebar__link--inert"
-          onClick={() => toast.info('Disponible dans une prochaine étape')}
+          onClick={() => toast.info('Coming in a future step')}
         >
           Settings
         </button>

@@ -54,7 +54,7 @@ function Dashboard() {
       setTopProducts(topProductsRes.data);
       setLowStock(lowStockRes.data);
     } catch {
-      toast.error('Impossible de charger le tableau de bord');
+      toast.error('Unable to load the dashboard');
     } finally {
       setIsLoading(false);
     }
@@ -75,7 +75,7 @@ function Dashboard() {
         </div>
 
         {isLoading && !summary ? (
-          <p className="dashboard__empty">Chargement du tableau de bord...</p>
+          <p className="dashboard__empty">Loading dashboard...</p>
         ) : (
         <div className="dashboard__grid">
           <div className="dashboard__card">
@@ -183,7 +183,7 @@ function Dashboard() {
           <div className="dashboard__card dashboard__card--wide">
             <h2>Top Selling Stock</h2>
             {topProducts.length === 0 ? (
-              <p className="dashboard__empty">Aucune vente enregistrée pour le moment.</p>
+              <p className="dashboard__empty">No sales recorded yet.</p>
             ) : (
               <table className="dashboard__table">
                 <thead>
@@ -211,7 +211,7 @@ function Dashboard() {
           <div className="dashboard__card dashboard__card--wide">
             <h2>Low Quantity Stock</h2>
             {lowStock.length === 0 ? (
-              <p className="dashboard__empty">Aucun produit en stock faible.</p>
+              <p className="dashboard__empty">No products in low stock.</p>
             ) : (
               <ul className="dashboard__low-stock-list">
                 {lowStock.map((product) => {

@@ -22,7 +22,7 @@ api.interceptors.response.use(
       localStorage.removeItem('authToken');
       localStorage.removeItem('currentUser');
       if (window.location.pathname !== '/login') {
-        toast.error('Session expirée, veuillez vous reconnecter');
+        toast.error('Session expired, please log in again');
         window.location.href = '/login';
       }
     }

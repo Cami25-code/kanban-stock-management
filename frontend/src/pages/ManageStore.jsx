@@ -15,7 +15,7 @@ function ManageStore() {
     setIsLoading(true);
     getStores()
       .then((response) => setStores(response.data))
-      .catch(() => toast.error('Impossible de charger les magasins'))
+      .catch(() => toast.error('Unable to load stores'))
       .finally(() => setIsLoading(false));
   };
 
@@ -53,16 +53,16 @@ function ManageStore() {
         </div>
 
         {isLoading ? (
-          <p>Chargement...</p>
+          <p>Loading...</p>
         ) : stores.length === 0 ? (
-          <p>Aucun magasin pour le moment.</p>
+          <p>No stores yet.</p>
         ) : (
           <div className="manage-store__list">
             {stores.map((store) => (
               <div key={store.id} className="manage-store__card">
                 <div className="manage-store__name">{store.name}</div>
                 <div className="manage-store__info">
-                  <p>{store.address || 'Adresse non renseignée'}</p>
+                  <p>{store.address || 'No address provided'}</p>
                   <p>{store.phone || ''}</p>
                 </div>
                 <button className="manage-store__edit" onClick={() => openEditModal(store)}>

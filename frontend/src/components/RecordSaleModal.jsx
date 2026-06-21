@@ -22,10 +22,10 @@ function RecordSaleModal({ onClose, onRecorded }) {
   useEffect(() => {
     getAllProducts()
       .then((response) => setProducts(response.data.data))
-      .catch(() => toast.error('Impossible de charger les produits'));
+      .catch(() => toast.error('Unable to load products'));
     getStores()
       .then((response) => setStores(response.data))
-      .catch(() => toast.error('Impossible de charger les magasins'));
+      .catch(() => toast.error('Unable to load stores'));
   }, []);
 
   const selectedProduct = products.find((product) => product.id === Number(form.product_id));
@@ -41,13 +41,13 @@ function RecordSaleModal({ onClose, onRecorded }) {
     try {
       await createSale(form);
       onRecorded();
-      toast.success('Vente enregistrée');
+      toast.success('Sale recorded');
       onClose();
     } catch (error) {
       const errors = error.response?.data?.errors;
       const message = errors
         ? Object.values(errors)[0][0]
-        : "Erreur lors de l'enregistrement de la vente";
+        : 'Error recording sale';
       toast.error(message);
     } finally {
       setIsSubmitting(false);

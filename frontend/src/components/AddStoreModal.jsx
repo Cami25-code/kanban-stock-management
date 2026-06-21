@@ -26,13 +26,13 @@ function AddStoreModal({ store, onClose, onSaved }) {
         ? await updateStore(store.id, form)
         : await createStore(form);
       onSaved(response.data);
-      toast.success(isEditing ? 'Magasin mis à jour' : 'Magasin ajouté avec succès');
+      toast.success(isEditing ? 'Store updated' : 'Store added successfully');
       onClose();
     } catch (error) {
       const errors = error.response?.data?.errors;
       const message = errors
         ? Object.values(errors)[0][0]
-        : "Erreur lors de l'enregistrement du magasin";
+        : 'Error saving store';
       toast.error(message);
     } finally {
       setIsSubmitting(false);

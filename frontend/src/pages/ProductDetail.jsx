@@ -14,14 +14,14 @@ function ProductDetail() {
   useEffect(() => {
     getProduct(productId)
       .then((response) => setProduct(response.data))
-      .catch(() => toast.error('Impossible de charger ce produit'))
+      .catch(() => toast.error('Unable to load this product'))
       .finally(() => setIsLoading(false));
   }, [productId]);
 
   if (isLoading) {
     return (
       <AppLayout>
-        <p>Chargement...</p>
+        <p>Loading...</p>
       </AppLayout>
     );
   }
@@ -29,7 +29,7 @@ function ProductDetail() {
   if (!product) {
     return (
       <AppLayout>
-        <p>Produit introuvable.</p>
+        <p>Product not found.</p>
       </AppLayout>
     );
   }
@@ -69,7 +69,7 @@ function ProductDetail() {
               <dd>{product.supplier.phone || '-'}</dd>
             </dl>
           ) : (
-            <p>Aucun fournisseur associé.</p>
+            <p>No supplier associated.</p>
           )}
         </div>
 
@@ -93,7 +93,7 @@ function ProductDetail() {
               </tbody>
             </table>
           ) : (
-            <p>Ce produit n'est rattaché à aucun magasin (stock global uniquement).</p>
+            <p>This product is not assigned to any store (global stock only).</p>
           )}
         </div>
       </div>

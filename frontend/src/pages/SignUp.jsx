@@ -26,13 +26,13 @@ function SignUp() {
       const response = await register({ name, email, password });
       setAuthToken(response.data.token);
       setCurrentUser(response.data.user);
-      toast.success('Compte créé avec succès');
+      toast.success('Account created successfully');
       navigate('/');
     } catch (error) {
       const message =
         error.response?.data?.errors?.email?.[0] ||
         error.response?.data?.message ||
-        "Erreur lors de l'inscription";
+        'Error creating account';
       toast.error(message);
     } finally {
       setIsSubmitting(false);
@@ -91,7 +91,7 @@ function SignUp() {
         <button
           type="button"
           className="auth-form__google"
-          onClick={() => toast.info('Fonctionnalité non disponible')}
+          onClick={() => toast.info('Feature not available')}
         >
           Sign up with Google
         </button>

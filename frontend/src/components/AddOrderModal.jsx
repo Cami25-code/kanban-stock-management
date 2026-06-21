@@ -26,13 +26,13 @@ function AddOrderModal({ onClose, onCreated }) {
   useEffect(() => {
     getAllProducts()
       .then((response) => setProducts(response.data.data))
-      .catch(() => toast.error('Impossible de charger les produits'));
+      .catch(() => toast.error('Unable to load products'));
     getSuppliers()
       .then((response) => setSuppliers(response.data))
-      .catch(() => toast.error('Impossible de charger les fournisseurs'));
+      .catch(() => toast.error('Unable to load suppliers'));
     getStores()
       .then((response) => setStores(response.data))
-      .catch(() => toast.error('Impossible de charger les magasins'));
+      .catch(() => toast.error('Unable to load stores'));
   }, []);
 
   const selectedProduct = products.find((product) => product.id === Number(form.product_id));
@@ -58,13 +58,13 @@ function AddOrderModal({ onClose, onCreated }) {
     try {
       const response = await createOrder(form);
       onCreated(response.data);
-      toast.success('Commande créée avec succès');
+      toast.success('Order created successfully');
       onClose();
     } catch (error) {
       const errors = error.response?.data?.errors;
       const message = errors
         ? Object.values(errors)[0][0]
-        : 'Erreur lors de la création de la commande';
+        : 'Error creating order';
       toast.error(message);
     } finally {
       setIsSubmitting(false);

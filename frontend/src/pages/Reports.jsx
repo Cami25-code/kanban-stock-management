@@ -46,7 +46,7 @@ function Reports() {
         setProfitVsRevenue(profitVsRevenueRes.data);
         setBestProducts(bestProductsRes.data);
       } catch {
-        toast.error('Impossible de charger les rapports');
+        toast.error('Unable to load reports');
       } finally {
         setIsLoading(false);
       }
@@ -58,7 +58,7 @@ function Reports() {
   if (isLoading && !overview) {
     return (
       <AppLayout>
-        <p className="reports__empty">Chargement des rapports...</p>
+        <p className="reports__empty">Loading reports...</p>
       </AppLayout>
     );
   }
@@ -112,7 +112,7 @@ function Reports() {
           <div className="reports__card">
             <h2>Best selling category</h2>
             {bestCategories.length === 0 ? (
-              <p className="reports__empty">Aucune vente ce mois-ci.</p>
+              <p className="reports__empty">No sales this month.</p>
             ) : (
               <table className="reports__table">
                 <thead>
@@ -157,7 +157,7 @@ function Reports() {
         <div className="reports__card reports__card--wide">
           <h2>Best selling product</h2>
           {bestProducts.length === 0 ? (
-            <p className="reports__empty">Aucune vente ce mois-ci.</p>
+            <p className="reports__empty">No sales this month.</p>
           ) : (
             <table className="reports__table">
               <thead>

@@ -27,13 +27,13 @@ function AddSupplierModal({ onClose, onCreated }) {
     try {
       const response = await createSupplier(form);
       onCreated(response.data);
-      toast.success('Fournisseur ajouté avec succès');
+      toast.success('Supplier added successfully');
       onClose();
     } catch (error) {
       const errors = error.response?.data?.errors;
       const message = errors
         ? Object.values(errors)[0][0]
-        : "Erreur lors de l'ajout du fournisseur";
+        : 'Error adding supplier';
       toast.error(message);
     } finally {
       setIsSubmitting(false);
@@ -46,7 +46,7 @@ function AddSupplierModal({ onClose, onCreated }) {
         <button
           type="button"
           className="form-modal__image"
-          onClick={() => toast.info('Fonctionnalité non disponible')}
+          onClick={() => toast.info('Feature not available')}
         >
           <span>Drag image here</span>
           <span className="form-modal__browse">or Browse image</span>

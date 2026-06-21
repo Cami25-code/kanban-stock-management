@@ -31,10 +31,10 @@ function AddProductModal({ onClose, onCreated }) {
   useEffect(() => {
     getCategories()
       .then((response) => setCategories(response.data))
-      .catch(() => toast.error('Impossible de charger les catégories'));
+      .catch(() => toast.error('Unable to load categories'));
     getStores()
       .then((response) => setStores(response.data))
-      .catch(() => toast.error('Impossible de charger les magasins'));
+      .catch(() => toast.error('Unable to load stores'));
   }, []);
 
   const handleChange = (field) => (event) => {
@@ -61,9 +61,9 @@ function AddProductModal({ onClose, onCreated }) {
       setForm((prev) => ({ ...prev, category_id: String(response.data.id) }));
       setIsCreatingCategory(false);
       setNewCategoryName('');
-      toast.success('Catégorie créée');
+      toast.success('Category created');
     } catch {
-      toast.error('Erreur lors de la création de la catégorie');
+      toast.error('Error creating category');
     }
   };
 
@@ -74,13 +74,13 @@ function AddProductModal({ onClose, onCreated }) {
     try {
       const response = await createProduct(form);
       onCreated(response.data);
-      toast.success('Produit ajouté avec succès');
+      toast.success('Product added successfully');
       onClose();
     } catch (error) {
       const errors = error.response?.data?.errors;
       const message = errors
         ? Object.values(errors)[0][0]
-        : "Erreur lors de l'ajout du produit";
+        : 'Error adding product';
       toast.error(message);
     } finally {
       setIsSubmitting(false);
@@ -93,7 +93,7 @@ function AddProductModal({ onClose, onCreated }) {
         <button
           type="button"
           className="form-modal__image"
-          onClick={() => toast.info('Fonctionnalité non disponible')}
+          onClick={() => toast.info('Feature not available')}
         >
           <span>Drag image here</span>
           <span className="form-modal__browse">or Browse image</span>
@@ -126,7 +126,7 @@ function AddProductModal({ onClose, onCreated }) {
             <div className="form-modal__new-category">
               <input
                 type="text"
-                placeholder="Nom de la nouvelle catégorie"
+                placeholder="New category name"
                 value={newCategoryName}
                 onChange={(event) => setNewCategoryName(event.target.value)}
               />

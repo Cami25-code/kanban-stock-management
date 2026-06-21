@@ -27,7 +27,7 @@ function Inventory() {
           last_page: response.data.last_page,
         });
       })
-      .catch(() => toast.error('Impossible de charger les produits'))
+      .catch(() => toast.error('Unable to load products'))
       .finally(() => setIsLoading(false));
   };
 
@@ -63,11 +63,11 @@ function Inventory() {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={6}>Chargement...</td>
+                <td colSpan={6}>Loading...</td>
               </tr>
             ) : filteredProducts.length === 0 ? (
               <tr>
-                <td colSpan={6}>Aucun produit pour le moment.</td>
+                <td colSpan={6}>No products yet.</td>
               </tr>
             ) : (
               filteredProducts.map((product) => {
