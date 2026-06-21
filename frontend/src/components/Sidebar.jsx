@@ -9,7 +9,7 @@ import './Sidebar.css';
 const NAV_ITEMS = [
   { label: 'Dashboard', to: '/' },
   { label: 'Inventory', to: '/inventory' },
-  { label: 'Reports', to: null },
+  { label: 'Reports', to: '/reports' },
   { label: 'Suppliers', to: '/suppliers' },
   { label: 'Orders', to: '/orders' },
   { label: 'Manage Store', to: '/manage-store' },

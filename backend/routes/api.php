@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SupplierController;
@@ -53,4 +54,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/stats/orders-summary', [DashboardController::class, 'ordersSummary']);
     Route::get('/stats/top-products', [DashboardController::class, 'topProducts']);
     Route::get('/stats/low-stock', [DashboardController::class, 'lowStock']);
+
+    Route::get('/reports/overview', [ReportsController::class, 'overview']);
+    Route::get('/reports/best-categories', [ReportsController::class, 'bestCategories']);
+    Route::get('/reports/profit-vs-revenue', [ReportsController::class, 'profitVsRevenue']);
+    Route::get('/reports/best-products', [ReportsController::class, 'bestProducts']);
 });

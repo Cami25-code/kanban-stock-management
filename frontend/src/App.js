@@ -7,6 +7,7 @@ import ProductDetail from './pages/ProductDetail';
 import Suppliers from './pages/Suppliers';
 import Orders from './pages/Orders';
 import ManageStore from './pages/ManageStore';
+import Reports from './pages/Reports';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -60,6 +61,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ManageStore />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <ProtectedRoute>
+              <Reports />
             </ProtectedRoute>
           }
         />

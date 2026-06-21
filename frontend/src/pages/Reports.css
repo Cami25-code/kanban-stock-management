@@ -1,0 +1,90 @@
+.reports__top {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.reports__card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.reports__card--wide {
+  margin-bottom: 1rem;
+}
+
+.reports__card h2 {
+  font-size: 0.95rem;
+  margin: 0 0 1rem;
+}
+
+.reports__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.reports__stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.reports__stats strong {
+  font-size: 1rem;
+}
+
+.reports__stats span {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.reports__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.reports__table th {
+  text-align: left;
+  color: #6b7280;
+  font-weight: 600;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.reports__table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.reports__empty {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.percent-change--up {
+  color: #15803d;
+  font-weight: 600;
+}
+
+.percent-change--down {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.percent-change--neutral {
+  color: #6b7280;
+}
+
+@media (max-width: 900px) {
+  .reports__top {
+    grid-template-columns: 1fr;
+  }
+
+  .reports__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
