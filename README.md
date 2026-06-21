@@ -29,9 +29,10 @@ Application web de gestion de stock de type Kanban : inventaire, fournisseurs, c
 
 ```
 .
-├── backend/            # API Laravel
-├── frontend/           # Application React
+├── backend/            # API Laravel (+ Dockerfile, docker/ : vhost Apache, entrypoint)
+├── frontend/           # Application React (+ Dockerfile, nginx.conf)
 ├── docker-compose.yml  # Orchestration des 3 services (frontend, backend, db)
+├── .env.example        # Variables pour docker-compose
 └── README.md
 ```
 
@@ -77,12 +78,34 @@ Créer un compte via la page d'inscription, puis se connecter pour accéder à l
 
 ## Déploiement avec Docker
 
-L'application se déploie via trois conteneurs (front-end React + Nginx, back-end Laravel, base MySQL).
+L'application se déploie via trois conteneurs : front-end React servi par Nginx (build multi-stage), back-end Laravel sur PHP-Apache, et MySQL. Orchestration via `docker-compose.yml` à la racine.
+
+> **Note** : cette configuration n'a pas pu être testée par un `docker-compose up` réel sur la machine de développement (macOS 12 Monterey) — Docker y nécessite `colima` + `qemu`, et la compilation de `qemu` depuis les sources (aucune bottle précompilée pour cette version de macOS) s'est heurtée à un bug Homebrew après plusieurs heures de compilation. Les Dockerfile et `docker-compose.yml` ont été relus attentivement (et un bug réel a été corrigé : la désactivation des scripts Composer empêchait la découverte automatique des packages Laravel, ce qui aurait cassé Sanctum). Un VPS Linux n'a pas ce problème : Docker s'y installe nativement (`apt install docker.io docker-compose`), sans virtualisation imbriquée. À tester en priorité là, ou sur une machine où Docker fonctionne déjà.
+
+### 1. Configurer les variables d'environnement
+
+```bash
+cp .env.example .env
+```
+
+Renseigner dans `.env` : `DB_PASSWORD`, `DB_ROOT_PASSWORD`, et l'URL publique du serveur (`APP_URL`, `FRONTEND_URL`, `REACT_APP_API_URL` — voir l'avertissement ci-dessous). Générer ensuite une `APP_KEY` :
+
+```bash
+docker-compose run --rm backend php artisan key:generate --show
+```
+
+Copier la valeur affichée dans `APP_KEY=` du `.env`.
+
+> **Important — `REACT_APP_API_URL`** : React étant une application statique exécutée dans le navigateur de l'utilisateur (pas dans le réseau Docker), cette variable doit être l'URL **publique** du back-end (ex. `http://<IP-du-VPS>:8000/api` ou `https://api.mondomaine.com`), jamais un nom de service Docker interne comme `http://backend` — celui-ci n'est résolvable qu'entre conteneurs, pas depuis le navigateur. Cette valeur est figée au moment du build de l'image front-end : toute modification nécessite de reconstruire l'image (`docker-compose build frontend`).
+
+### 2. Construire et démarrer
 
 ```bash
 docker-compose up -d --build
 docker-compose exec backend php artisan migrate --force
 ```
+
+(Pas de seeders : créer le compte utilisateur via la page d'inscription une fois l'application en ligne.)
 
 Vérifier que les services tournent :
 
@@ -91,11 +114,14 @@ docker-compose ps
 ```
 
 - Front-end : `http://<adresse-du-serveur>:3000`
-- API : `http://<adresse-du-serveur>:8000/api`
+- API : `http://<adresse-du-serveur>:8000/api/ping` (test de connectivité)
 
-Créer le compte administrateur via la page d'inscription une fois l'application en ligne.
+### 3. Persistance et mises à jour
 
-> En production, penser à fournir une `APP_KEY` et à configurer le CORS de Laravel pour autoriser le domaine du front-end. Un reverse proxy (Nginx ou Traefik) et un certificat SSL (Let's Encrypt) peuvent être ajoutés pour servir l'application sur un nom de domaine.
+- Les données MySQL sont conservées dans le volume nommé `db_data`, le contenu de `storage/` Laravel dans `backend_storage` : un `docker-compose down` (sans `-v`) ne les efface pas.
+- Après un nouveau `git pull` sur le serveur : `docker-compose up -d --build` reconstruit les images modifiées, puis `docker-compose exec backend php artisan migrate --force` applique les nouvelles migrations.
+
+> En production, le port MySQL n'est volontairement pas exposé à l'extérieur (seuls les conteneurs du réseau Docker Compose y accèdent). Un reverse proxy (Nginx ou Traefik) et un certificat SSL (Let's Encrypt) peuvent être ajoutés devant les conteneurs `frontend`/`backend` pour servir l'application sur un nom de domaine en HTTPS.
 
 ---
 
