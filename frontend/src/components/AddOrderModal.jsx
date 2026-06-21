@@ -4,6 +4,7 @@ import { getAllProducts } from '../api/products';
 import { getSuppliers } from '../api/suppliers';
 import { getStores } from '../api/stores';
 import { createOrder } from '../api/orders';
+import { formatCurrency } from '../utils/currency';
 import Modal from './Modal';
 import './FormModal.css';
 
@@ -88,7 +89,9 @@ function AddOrderModal({ onClose, onCreated }) {
         </label>
 
         {selectedProduct && (
-          <p className="form-modal__hint">Buying price: ₹{selectedProduct.buying_price}</p>
+          <p className="form-modal__hint">
+            Buying price: {formatCurrency(selectedProduct.buying_price)}
+          </p>
         )}
 
         {selectedProduct && !selectedProduct.supplier_id && (

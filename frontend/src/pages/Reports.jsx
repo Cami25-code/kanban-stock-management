@@ -18,6 +18,7 @@ import {
 } from '../api/reports';
 import AppLayout from '../components/AppLayout';
 import { formatPercentChange } from '../utils/percent';
+import { formatCurrency } from '../utils/currency';
 import './Reports.css';
 
 function Reports() {
@@ -70,23 +71,23 @@ function Reports() {
             <h2>Overview</h2>
             <div className="reports__stats">
               <div>
-                <strong>₹{overview?.total_profit_ytd ?? '-'}</strong>
+                <strong>{formatCurrency(overview?.total_profit_ytd)}</strong>
                 <span>Total Profit</span>
               </div>
               <div>
-                <strong>₹{overview?.revenue_this_month ?? '-'}</strong>
+                <strong>{formatCurrency(overview?.revenue_this_month)}</strong>
                 <span>Revenue</span>
               </div>
               <div>
-                <strong>₹{overview?.cost_this_month ?? '-'}</strong>
+                <strong>{formatCurrency(overview?.cost_this_month)}</strong>
                 <span>Sales (cost)</span>
               </div>
               <div>
-                <strong>₹{overview?.net_purchase_value_ytd ?? '-'}</strong>
+                <strong>{formatCurrency(overview?.net_purchase_value_ytd)}</strong>
                 <span>Net purchase value</span>
               </div>
               <div>
-                <strong>₹{overview?.net_sales_value_ytd ?? '-'}</strong>
+                <strong>{formatCurrency(overview?.net_sales_value_ytd)}</strong>
                 <span>Net sales value</span>
               </div>
               <div>
@@ -127,7 +128,7 @@ function Reports() {
                     return (
                       <tr key={category.category}>
                         <td>{category.category}</td>
-                        <td>₹{category.turnover}</td>
+                        <td>{formatCurrency(category.turnover)}</td>
                         <td className={change.className}>{change.label}</td>
                       </tr>
                     );
@@ -180,7 +181,7 @@ function Reports() {
                       <td>
                         {product.remaining_quantity} {product.unit || ''}
                       </td>
-                      <td>₹{product.turnover}</td>
+                      <td>{formatCurrency(product.turnover)}</td>
                       <td className={change.className}>{change.label}</td>
                     </tr>
                   );

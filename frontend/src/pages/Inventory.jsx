@@ -5,6 +5,8 @@ import { getProducts } from '../api/products';
 import AppLayout from '../components/AppLayout';
 import AddProductModal from '../components/AddProductModal';
 import { getAvailability } from '../utils/stock';
+import { formatCurrency } from '../utils/currency';
+import { formatDate } from '../utils/date';
 import '../styles/DataPage.css';
 import '../styles/Availability.css';
 
@@ -75,18 +77,14 @@ function Inventory() {
                     <td>
                       <Link to={`/inventory/${product.id}`}>{product.name}</Link>
                     </td>
-                    <td>₹{product.buying_price}</td>
+                    <td>{formatCurrency(product.buying_price)}</td>
                     <td>
                       {product.quantity} {product.unit || ''}
                     </td>
                     <td>
                       {product.threshold} {product.unit || ''}
                     </td>
-                    <td>
-                      {product.expiry_date
-                        ? new Date(product.expiry_date).toLocaleDateString()
-                        : '-'}
-                    </td>
+                    <td>{formatDate(product.expiry_date)}</td>
                     <td>
                       <span className={`availability ${availability.className}`}>
                         {availability.label}

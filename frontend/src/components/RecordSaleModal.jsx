@@ -3,6 +3,7 @@ import { toast } from 'sonner';
 import { getAllProducts } from '../api/products';
 import { getStores } from '../api/stores';
 import { createSale } from '../api/sales';
+import { formatCurrency } from '../utils/currency';
 import Modal from './Modal';
 import './FormModal.css';
 
@@ -72,7 +73,8 @@ function RecordSaleModal({ onClose, onRecorded }) {
 
         {selectedProduct && (
           <p className="form-modal__hint">
-            En stock : {selectedProduct.quantity} — Prix de vente : ₹{selectedProduct.selling_price}
+            In stock: {selectedProduct.quantity} — Selling price:{' '}
+            {formatCurrency(selectedProduct.selling_price)}
           </p>
         )}
 

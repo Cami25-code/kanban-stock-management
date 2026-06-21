@@ -22,6 +22,7 @@ import {
 import AppLayout from '../components/AppLayout';
 import RecordSaleModal from '../components/RecordSaleModal';
 import { getAvailability } from '../utils/stock';
+import { formatCurrency } from '../utils/currency';
 import '../styles/Availability.css';
 import './Dashboard.css';
 
@@ -85,15 +86,15 @@ function Dashboard() {
                 <span>Sales</span>
               </div>
               <div>
-                <strong>₹{summary?.sales_last7.revenue ?? '-'}</strong>
+                <strong>{formatCurrency(summary?.sales_last7.revenue)}</strong>
                 <span>Revenue</span>
               </div>
               <div>
-                <strong>₹{summary?.sales_last7.profit ?? '-'}</strong>
+                <strong>{formatCurrency(summary?.sales_last7.profit)}</strong>
                 <span>Profit</span>
               </div>
               <div>
-                <strong>₹{summary?.sales_last7.cost ?? '-'}</strong>
+                <strong>{formatCurrency(summary?.sales_last7.cost)}</strong>
                 <span>Cost</span>
               </div>
             </div>
@@ -121,7 +122,7 @@ function Dashboard() {
                 <span>Purchase</span>
               </div>
               <div>
-                <strong>₹{summary?.purchase_last7.cost ?? '-'}</strong>
+                <strong>{formatCurrency(summary?.purchase_last7.cost)}</strong>
                 <span>Cost</span>
               </div>
               <div>
@@ -129,7 +130,7 @@ function Dashboard() {
                 <span>Cancel</span>
               </div>
               <div>
-                <strong>₹{summary?.purchase_last7.returned_cost ?? '-'}</strong>
+                <strong>{formatCurrency(summary?.purchase_last7.returned_cost)}</strong>
                 <span>Return</span>
               </div>
             </div>
@@ -199,7 +200,7 @@ function Dashboard() {
                       <td>{product.name}</td>
                       <td>{product.sold_quantity}</td>
                       <td>{product.remaining_quantity}</td>
-                      <td>₹{product.price}</td>
+                      <td>{formatCurrency(product.price)}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { getProduct } from '../api/products';
 import AppLayout from '../components/AppLayout';
+import { formatDate } from '../utils/date';
 import './ProductDetail.css';
 
 function ProductDetail() {
@@ -52,9 +53,7 @@ function ProductDetail() {
             <dt>Product category</dt>
             <dd>{product.category?.name || '-'}</dd>
             <dt>Expiry Date</dt>
-            <dd>
-              {product.expiry_date ? new Date(product.expiry_date).toLocaleDateString() : '-'}
-            </dd>
+            <dd>{formatDate(product.expiry_date)}</dd>
             <dt>Threshold Value</dt>
             <dd>{product.threshold}</dd>
           </dl>

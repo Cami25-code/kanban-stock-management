@@ -4,6 +4,8 @@ import { getOrders, updateOrderStatus } from '../api/orders';
 import AppLayout from '../components/AppLayout';
 import AddOrderModal from '../components/AddOrderModal';
 import { getOrderStatusClass, isFinalStatus } from '../utils/orderStatus';
+import { formatCurrency } from '../utils/currency';
+import { formatDate } from '../utils/date';
 import '../styles/DataPage.css';
 import './Orders.css';
 
@@ -94,16 +96,12 @@ function Orders() {
               filteredOrders.map((order) => (
                 <tr key={order.id}>
                   <td>{order.product.name}</td>
-                  <td>₹{order.order_value}</td>
+                  <td>{formatCurrency(order.order_value)}</td>
                   <td>
                     {order.quantity} {order.product.unit || ''}
                   </td>
                   <td>{order.id}</td>
-                  <td>
-                    {order.expected_date
-                      ? new Date(order.expected_date).toLocaleDateString()
-                      : '-'}
-                  </td>
+                  <td>{formatDate(order.expected_date)}</td>
                   <td>
                     <span className={`order-status ${getOrderStatusClass(order.status)}`}>
                       {order.status}
