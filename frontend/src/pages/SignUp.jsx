@@ -4,6 +4,7 @@ import { useSetRecoilState } from 'recoil';
 import { toast } from 'sonner';
 import { register } from '../api/auth';
 import { authTokenState, currentUserState } from '../state/atoms';
+import { isValidEmail } from '../utils/validation';
 import AuthLayout from '../components/AuthLayout';
 import logoIcon from '../assets/logo-kanban-icon.png';
 import './AuthForm.css';
@@ -20,6 +21,17 @@ function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!isValidEmail(email)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+
+    if (password.length < 8) {
+      toast.error('Password must be at least 8 characters');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
