@@ -65,3 +65,29 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.settings__about {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0.5rem 1rem;
+  margin: 0;
+}
+
+.settings__about dt {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.settings__about dd {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.settings__about a {
+  color: #3b5bdb;
+  text-decoration: none;
+}
+
+.settings__about a:hover {
+  text-decoration: underline;
+}

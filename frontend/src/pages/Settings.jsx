@@ -123,6 +123,24 @@ function Settings() {
             </button>
           </form>
         </div>
+
+        <div className="settings__card">
+          <h2>About / Contact</h2>
+          <dl className="settings__about">
+            <dt>Developed by</dt>
+            <dd>Ibrahima Camara</dd>
+            <dt>Contact</dt>
+            <dd>
+              <a href="mailto:Ibrahima.dev@proton.me">Ibrahima.dev@proton.me</a>
+            </dd>
+            <dt>Portfolio</dt>
+            <dd>
+              <a href="https://ibrahima-camara.vercel.app" target="_blank" rel="noopener noreferrer">
+                ibrahima-camara.vercel.app
+              </a>
+            </dd>
+          </dl>
+        </div>
       </div>
     </AppLayout>
   );
