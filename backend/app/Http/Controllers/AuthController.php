@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -58,5 +60,34 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+    }
+
+    public function update(Request $request)
+    {
+        $user = $request->user();
+
+        $data = $request->validate([
+            'name' => ['sometimes', 'string', 'max:255'],
+            'current_password' => ['required_with:password', 'string'],
+            'password' => ['sometimes', 'string', 'min:8'],
+        ]);
+
+        if (isset($data['password'])) {
+            if (! Hash::check($data['current_password'], $user->password)) {
+                throw ValidationException::withMessages([
+                    'current_password' => ['The current password is incorrect.'],
+                ]);
+            }
+
+            $user->password = $data['password'];
+        }
+
+        if (isset($data['name'])) {
+            $user->name = $data['name'];
+        }
+
+        $user->save();
+
+        return response()->json($user);
     }
 }

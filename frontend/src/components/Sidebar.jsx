@@ -63,13 +63,14 @@ function Sidebar() {
       </nav>
 
       <div className="sidebar__footer">
-        <button
-          type="button"
-          className="sidebar__link sidebar__link--inert"
-          onClick={() => toast.info('Coming in a future step')}
+        <NavLink
+          to="/settings"
+          className={({ isActive }) =>
+            'sidebar__link' + (isActive ? ' sidebar__link--active' : '')
+          }
         >
           Settings
-        </button>
+        </NavLink>
         <button type="button" className="sidebar__link" onClick={handleLogout}>
           Log Out
         </button>

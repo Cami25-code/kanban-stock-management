@@ -1,0 +1,67 @@
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 480px;
+}
+
+.settings__card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.settings__card h2 {
+  font-size: 0.95rem;
+  margin: 0 0 1rem;
+}
+
+.settings__card form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.settings__card label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.settings__card input {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.settings__card input:focus {
+  outline: none;
+  border-color: #3b5bdb;
+}
+
+.settings__card input:disabled {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.settings__card button {
+  align-self: flex-start;
+  padding: 0.55rem 1.2rem;
+  background-color: #3b5bdb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.settings__card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
