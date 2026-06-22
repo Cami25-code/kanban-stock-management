@@ -133,7 +133,7 @@ function Settings() {
             <dd>
               <a href="mailto:Ibrahima.dev@proton.me">Ibrahima.dev@proton.me</a>
             </dd>
-            <dt>Portfolio</dt>
+            <dt>Link</dt>
             <dd>
               <a href="https://ibrahima-camara.vercel.app" target="_blank" rel="noopener noreferrer">
                 ibrahima-camara.vercel.app
