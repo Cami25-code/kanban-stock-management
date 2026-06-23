@@ -5,7 +5,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libonig-dev \
         unzip \
     && docker-php-ext-install pdo_mysql mbstring bcmath zip pcntl \
-    && a2enmod rewrite \
+    && a2dismod mpm_event mpm_worker \
+    && a2enmod mpm_prefork rewrite \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
