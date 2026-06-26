@@ -6,6 +6,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         unzip \
     && docker-php-ext-install pdo_mysql mbstring bcmath zip pcntl \
     && a2dismod mpm_event mpm_worker \
+    && a2dissite 000-default.conf default-ssl.conf || true \
+    && rm -f /etc/apache2/sites-enabled/*.conf || true \
     && a2enmod mpm_prefork rewrite \
     && rm -rf /var/lib/apt/lists/*
 
