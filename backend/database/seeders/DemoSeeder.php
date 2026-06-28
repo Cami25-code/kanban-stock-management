@@ -71,12 +71,12 @@ class DemoSeeder extends Seeder
     private function seedCategories(): array
     {
         $rows = [
-            'Électronique' => 'Appareils électroniques grand public',
-            'Accessoires' => 'Accessoires et périphériques divers',
-            'Informatique' => 'Ordinateurs et composants',
-            'Audio' => 'Casques, enceintes et matériel audio',
-            'Maison connectée' => 'Objets connectés pour la maison',
-            'Bureautique' => 'Fournitures et matériel de bureau',
+            'Electronics' => 'Consumer electronic devices',
+            'Accessories' => 'Miscellaneous accessories and peripherals',
+            'Computing' => 'Computers and components',
+            'Audio' => 'Headphones, speakers and audio gear',
+            'Smart Home' => 'Connected devices for the home',
+            'Office' => 'Office supplies and equipment',
         ];
 
         $categories = [];
@@ -96,11 +96,11 @@ class DemoSeeder extends Seeder
     private function seedSuppliers(): array
     {
         $rows = [
-            ['TechDistrib SARL', 'contact@techdistrib.example', '+33 1 23 45 67 01', true, '12 rue de l\'Industrie, 75010 Paris'],
-            ['NordImport', 'ventes@nordimport.example', '+33 3 20 11 22 33', false, '5 avenue du Commerce, 59000 Lille'],
-            ['Global Supply Co', 'hello@globalsupply.example', '+33 4 91 00 88 77', true, '88 quai des Docks, 13002 Marseille'],
-            ['ElectroPro', 'pro@electropro.example', '+33 5 56 44 55 66', false, '3 allée des Artisans, 33000 Bordeaux'],
-            ['MaisonConnect', 'info@maisonconnect.example', '+33 2 40 12 34 56', true, '21 boulevard Atlantique, 44000 Nantes'],
+            ['TechDistrib Ltd', 'contact@techdistrib.example', '+1 212 555 0101', true, '12 Industry Street, New York, NY 10010'],
+            ['NorthImport Inc', 'sales@northimport.example', '+1 312 555 0122', false, '5 Commerce Avenue, Chicago, IL 60601'],
+            ['Global Supply Co', 'hello@globalsupply.example', '+44 20 7946 0088', true, '88 Dock Quay, London, EC1 2AB'],
+            ['ElectroPro', 'pro@electropro.example', '+1 415 555 0166', false, '3 Artisan Lane, San Francisco, CA 94103'],
+            ['SmartHome Trading', 'info@smarthometrading.example', '+1 416 555 0134', true, '21 Atlantic Boulevard, Toronto, ON M5V 2T6'],
         ];
 
         return array_map(fn ($r) => Supplier::create([
@@ -118,9 +118,9 @@ class DemoSeeder extends Seeder
     private function seedStores(): array
     {
         $rows = [
-            ['Boutique Centre-Ville', '14 place de la République, 75011 Paris', '+33 1 40 00 00 01'],
-            ['Entrepôt Sud', 'Zone logistique Sud, 69007 Lyon', '+33 4 72 00 00 02'],
-            ['Magasin Atlantique', '7 rue du Port, 44000 Nantes', '+33 2 40 00 00 03'],
+            ['Downtown Store', '14 Republic Square, New York, NY 10011', '+1 212 555 0201'],
+            ['South Warehouse', 'South Logistics Park, Chicago, IL 60607', '+1 312 555 0202'],
+            ['Harbor Shop', '7 Port Road, Toronto, ON M5J 1A7', '+1 416 555 0203'],
         ];
 
         return array_map(fn ($r) => Store::create([
@@ -142,26 +142,26 @@ class DemoSeeder extends Seeder
     {
         // [name, category, supplierIndex, buying, selling, quantity, threshold, unit]
         $rows = [
-            ['Smartphone Galaxy A54', 'Électronique', 0, 280, 399, 42, 10, 'pcs'],
-            ['Smartphone iPhone SE', 'Électronique', 0, 350, 489, 0, 8, 'pcs'],       // rupture
-            ['Tablette Tab S6', 'Électronique', 2, 220, 329, 6, 8, 'pcs'],            // bas
-            ['Écouteurs Bluetooth Air', 'Audio', 3, 18, 39, 120, 20, 'pcs'],
-            ['Casque ProSound X', 'Audio', 3, 65, 119, 4, 6, 'pcs'],                  // bas
-            ['Enceinte Boom 360', 'Audio', 2, 45, 89, 0, 5, 'pcs'],                   // rupture
-            ['Clavier Mécanique RGB', 'Accessoires', 1, 35, 69, 75, 15, 'pcs'],
-            ['Souris Sans Fil Pro', 'Accessoires', 1, 12, 29, 9, 12, 'pcs'],          // bas
-            ['Hub USB-C 7-en-1', 'Accessoires', 0, 22, 45, 60, 10, 'pcs'],
-            ['Webcam Full HD', 'Accessoires', 3, 28, 59, 0, 6, 'pcs'],                // rupture
-            ['Ordinateur Portable UltraBook 14"', 'Informatique', 2, 620, 899, 18, 5, 'pcs'],
-            ['Écran 27" 144Hz', 'Informatique', 0, 190, 279, 3, 5, 'pcs'],            // bas
-            ['SSD NVMe 1To', 'Informatique', 1, 70, 109, 95, 20, 'pcs'],
-            ['Barrette RAM 16Go', 'Informatique', 1, 38, 65, 7, 10, 'pcs'],           // bas
-            ['Ampoule Connectée Color', 'Maison connectée', 4, 9, 22, 200, 30, 'pcs'],
-            ['Prise Intelligente WiFi', 'Maison connectée', 4, 11, 25, 0, 15, 'pcs'], // rupture
-            ['Thermostat Smart Eco', 'Maison connectée', 4, 75, 139, 25, 8, 'pcs'],
-            ['Imprimante Laser MonoJet', 'Bureautique', 2, 130, 199, 11, 6, 'pcs'],
-            ['Lot Cartouches Toner', 'Bureautique', 2, 40, 75, 5, 10, 'pcs'],         // bas
-            ['Destructeur de Documents', 'Bureautique', 3, 55, 99, 30, 8, 'pcs'],
+            ['Galaxy A54 Smartphone', 'Electronics', 0, 280, 399, 42, 10, 'pcs'],
+            ['iPhone SE Smartphone', 'Electronics', 0, 350, 489, 0, 8, 'pcs'],        // out of stock
+            ['Tab S6 Tablet', 'Electronics', 2, 220, 329, 6, 8, 'pcs'],               // low
+            ['Air Bluetooth Earbuds', 'Audio', 3, 18, 39, 120, 20, 'pcs'],
+            ['ProSound X Headphones', 'Audio', 3, 65, 119, 4, 6, 'pcs'],              // low
+            ['Boom 360 Speaker', 'Audio', 2, 45, 89, 0, 5, 'pcs'],                    // out of stock
+            ['RGB Mechanical Keyboard', 'Accessories', 1, 35, 69, 75, 15, 'pcs'],
+            ['Wireless Pro Mouse', 'Accessories', 1, 12, 29, 9, 12, 'pcs'],           // low
+            ['USB-C 7-in-1 Hub', 'Accessories', 0, 22, 45, 60, 10, 'pcs'],
+            ['Full HD Webcam', 'Accessories', 3, 28, 59, 0, 6, 'pcs'],                // out of stock
+            ['UltraBook 14" Laptop', 'Computing', 2, 620, 899, 18, 5, 'pcs'],
+            ['27" 144Hz Monitor', 'Computing', 0, 190, 279, 3, 5, 'pcs'],             // low
+            ['1TB NVMe SSD', 'Computing', 1, 70, 109, 95, 20, 'pcs'],
+            ['16GB RAM Module', 'Computing', 1, 38, 65, 7, 10, 'pcs'],                // low
+            ['Color Smart Bulb', 'Smart Home', 4, 9, 22, 200, 30, 'pcs'],
+            ['WiFi Smart Plug', 'Smart Home', 4, 11, 25, 0, 15, 'pcs'],               // out of stock
+            ['Eco Smart Thermostat', 'Smart Home', 4, 75, 139, 25, 8, 'pcs'],
+            ['MonoJet Laser Printer', 'Office', 2, 130, 199, 11, 6, 'pcs'],
+            ['Toner Cartridge Pack', 'Office', 2, 40, 75, 5, 10, 'pcs'],              // low
+            ['Document Shredder', 'Office', 3, 55, 99, 30, 8, 'pcs'],
         ];
 
         $products = [];
