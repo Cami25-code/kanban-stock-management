@@ -71,59 +71,61 @@ function Orders() {
           </div>
         </div>
 
-        <table className="data-page__table">
-          <thead>
-            <tr>
-              <th>Products</th>
-              <th>Order Value</th>
-              <th>Quantity</th>
-              <th>Order ID</th>
-              <th>Expected Delivery</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
+        <div className="table-scroll-wrapper">
+          <table className="data-page__table">
+            <thead>
               <tr>
-                <td colSpan={7}>Loading...</td>
+                <th>Products</th>
+                <th>Order Value</th>
+                <th>Quantity</th>
+                <th>Order ID</th>
+                <th>Expected Delivery</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            ) : filteredOrders.length === 0 ? (
-              <tr>
-                <td colSpan={7}>No orders yet.</td>
-              </tr>
-            ) : (
-              filteredOrders.map((order) => (
-                <tr key={order.id}>
-                  <td>{order.product.name}</td>
-                  <td>{formatCurrency(order.order_value)}</td>
-                  <td>
-                    {order.quantity} {order.product.unit || ''}
-                  </td>
-                  <td>{order.id}</td>
-                  <td>{formatDate(order.expected_date)}</td>
-                  <td>
-                    <span className={`order-status ${getOrderStatusClass(order.status)}`}>
-                      {order.status}
-                    </span>
-                  </td>
-                  <td>
-                    {!isFinalStatus(order.status) && (
-                      <div className="orders__actions">
-                        <button onClick={() => handleStatusChange(order, 'Delivered')}>
-                          Mark as Delivered
-                        </button>
-                        <button onClick={() => handleStatusChange(order, 'Returned')}>
-                          Mark as Returned
-                        </button>
-                      </div>
-                    )}
-                  </td>
+            </thead>
+            <tbody>
+              {isLoading ? (
+                <tr>
+                  <td colSpan={7}>Loading...</td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : filteredOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={7}>No orders yet.</td>
+                </tr>
+              ) : (
+                filteredOrders.map((order) => (
+                  <tr key={order.id}>
+                    <td>{order.product.name}</td>
+                    <td>{formatCurrency(order.order_value)}</td>
+                    <td>
+                      {order.quantity} {order.product.unit || ''}
+                    </td>
+                    <td>{order.id}</td>
+                    <td>{formatDate(order.expected_date)}</td>
+                    <td>
+                      <span className={`order-status ${getOrderStatusClass(order.status)}`}>
+                        {order.status}
+                      </span>
+                    </td>
+                    <td>
+                      {!isFinalStatus(order.status) && (
+                        <div className="orders__actions">
+                          <button onClick={() => handleStatusChange(order, 'Delivered')}>
+                            Mark as Delivered
+                          </button>
+                          <button onClick={() => handleStatusChange(order, 'Returned')}>
+                            Mark as Returned
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
 
         <div className="data-page__pagination">
           <button

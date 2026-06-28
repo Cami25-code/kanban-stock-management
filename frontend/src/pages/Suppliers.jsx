@@ -42,48 +42,50 @@ function Suppliers() {
           </button>
         </div>
 
-        <table className="data-page__table">
-          <thead>
-            <tr>
-              <th>Supplier Name</th>
-              <th>Product</th>
-              <th>Contact Number</th>
-              <th>Email</th>
-              <th>Type</th>
-              <th>On the way</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
+        <div className="table-scroll-wrapper">
+          <table className="data-page__table">
+            <thead>
               <tr>
-                <td colSpan={6}>Loading...</td>
+                <th>Supplier Name</th>
+                <th>Product</th>
+                <th>Contact Number</th>
+                <th>Email</th>
+                <th>Type</th>
+                <th>On the way</th>
               </tr>
-            ) : filteredSuppliers.length === 0 ? (
-              <tr>
-                <td colSpan={6}>No suppliers yet.</td>
-              </tr>
-            ) : (
-              filteredSuppliers.map((supplier) => (
-                <tr key={supplier.id}>
-                  <td>{supplier.name}</td>
-                  <td>{supplier.products?.[0]?.name || '-'}</td>
-                  <td>{supplier.phone || '-'}</td>
-                  <td>{supplier.email}</td>
-                  <td>
-                    <span
-                      className={
-                        supplier.takes_back_returns ? 'supplier-type--yes' : 'supplier-type--no'
-                      }
-                    >
-                      {supplier.takes_back_returns ? 'Taking Return' : 'Not Taking Return'}
-                    </span>
-                  </td>
-                  <td>{supplier.on_the_way ?? '-'}</td>
+            </thead>
+            <tbody>
+              {isLoading ? (
+                <tr>
+                  <td colSpan={6}>Loading...</td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : filteredSuppliers.length === 0 ? (
+                <tr>
+                  <td colSpan={6}>No suppliers yet.</td>
+                </tr>
+              ) : (
+                filteredSuppliers.map((supplier) => (
+                  <tr key={supplier.id}>
+                    <td>{supplier.name}</td>
+                    <td>{supplier.products?.[0]?.name || '-'}</td>
+                    <td>{supplier.phone || '-'}</td>
+                    <td>{supplier.email}</td>
+                    <td>
+                      <span
+                        className={
+                          supplier.takes_back_returns ? 'supplier-type--yes' : 'supplier-type--no'
+                        }
+                      >
+                        {supplier.takes_back_returns ? 'Taking Return' : 'Not Taking Return'}
+                      </span>
+                    </td>
+                    <td>{supplier.on_the_way ?? '-'}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isModalOpen && (

@@ -114,27 +114,29 @@ function Reports() {
             {bestCategories.length === 0 ? (
               <p className="reports__empty">No sales this month.</p>
             ) : (
-              <table className="reports__table">
-                <thead>
-                  <tr>
-                    <th>Category</th>
-                    <th>Turn Over</th>
-                    <th>Increase By</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {bestCategories.map((category) => {
-                    const change = formatPercentChange(category.increase_percent);
-                    return (
-                      <tr key={category.category}>
-                        <td>{category.category}</td>
-                        <td>{formatCurrency(category.turnover)}</td>
-                        <td className={change.className}>{change.label}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              <div className="table-scroll-wrapper">
+                <table className="reports__table">
+                  <thead>
+                    <tr>
+                      <th>Category</th>
+                      <th>Turn Over</th>
+                      <th>Increase By</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bestCategories.map((category) => {
+                      const change = formatPercentChange(category.increase_percent);
+                      return (
+                        <tr key={category.category}>
+                          <td>{category.category}</td>
+                          <td>{formatCurrency(category.turnover)}</td>
+                          <td className={change.className}>{change.label}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         </div>
@@ -159,35 +161,37 @@ function Reports() {
           {bestProducts.length === 0 ? (
             <p className="reports__empty">No sales this month.</p>
           ) : (
-            <table className="reports__table">
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Product ID</th>
-                  <th>Category</th>
-                  <th>Remaining Quantity</th>
-                  <th>Turn Over</th>
-                  <th>Increase By</th>
-                </tr>
-              </thead>
-              <tbody>
-                {bestProducts.map((product) => {
-                  const change = formatPercentChange(product.increase_percent);
-                  return (
-                    <tr key={product.product_id}>
-                      <td>{product.name}</td>
-                      <td>{product.sku || '-'}</td>
-                      <td>{product.category || '-'}</td>
-                      <td>
-                        {product.remaining_quantity} {product.unit || ''}
-                      </td>
-                      <td>{formatCurrency(product.turnover)}</td>
-                      <td className={change.className}>{change.label}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <div className="table-scroll-wrapper">
+              <table className="reports__table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Product ID</th>
+                    <th>Category</th>
+                    <th>Remaining Quantity</th>
+                    <th>Turn Over</th>
+                    <th>Increase By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {bestProducts.map((product) => {
+                    const change = formatPercentChange(product.increase_percent);
+                    return (
+                      <tr key={product.product_id}>
+                        <td>{product.name}</td>
+                        <td>{product.sku || '-'}</td>
+                        <td>{product.category || '-'}</td>
+                        <td>
+                          {product.remaining_quantity} {product.unit || ''}
+                        </td>
+                        <td>{formatCurrency(product.turnover)}</td>
+                        <td className={change.className}>{change.label}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </div>

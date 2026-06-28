@@ -41,6 +41,11 @@
   color: #6b7280;
 }
 
+.table-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .reports__table {
   width: 100%;
   border-collapse: collapse;
