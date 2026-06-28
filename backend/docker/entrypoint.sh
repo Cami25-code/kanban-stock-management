@@ -7,12 +7,6 @@ find /etc/apache2/mods-enabled/ -name 'mpm_*.conf' ! -name 'mpm_prefork.conf' -d
 
 chown -R www-data:www-data storage bootstrap/cache
 php artisan config:clear
-
-echo "=== [DIAG] mods-enabled/ ==="
-ls /etc/apache2/mods-enabled/
-echo "=== [DIAG] apache2 -t ==="
-apache2 -t 2>&1 || true
-echo "=== [DIAG] grep LoadModule/mpm dans apache2.conf ==="
-grep -n "LoadModule\|mpm" /etc/apache2/apache2.conf 2>/dev/null || true
+php artisan migrate --force
 
 exec apache2-foreground
