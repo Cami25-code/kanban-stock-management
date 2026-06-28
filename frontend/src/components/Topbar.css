@@ -34,3 +34,30 @@
   font-weight: 600;
   flex-shrink: 0;
 }
+
+/* Hamburger — hidden on desktop, visible on mobile */
+.topbar__hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #374151;
+  padding: 0.25rem 0.4rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+  .topbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .topbar__hamburger {
+    display: block;
+  }
+
+  .topbar__search {
+    max-width: none;
+  }
+}

@@ -14,3 +14,9 @@
 .app-layout__content {
   padding: 1.5rem 2rem;
 }
+
+@media (max-width: 767px) {
+  .app-layout__content {
+    padding: 1rem;
+  }
+}

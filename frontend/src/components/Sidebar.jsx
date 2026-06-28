@@ -15,7 +15,7 @@ const NAV_ITEMS = [
   { label: 'Manage Store', to: '/manage-store' },
 ];
 
-function Sidebar() {
+function Sidebar({ isOpen, onClose }) {
   const resetAuthToken = useResetRecoilState(authTokenState);
   const resetCurrentUser = useResetRecoilState(currentUserState);
 
@@ -23,7 +23,7 @@ function Sidebar() {
     try {
       await logout();
     } catch {
-      // le token est de toute façon effacé côté client
+      // token is cleared client-side regardless
     }
     resetAuthToken();
     resetCurrentUser();
@@ -31,51 +31,60 @@ function Sidebar() {
   };
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar__brand">
-        <img src={logoIcon} alt="Kanban" />
-        <span>KANBAN</span>
-      </div>
+    <>
+      {/* Overlay — mobile only, closes the drawer when tapped */}
+      {isOpen && (
+        <div className="sidebar-overlay" onClick={onClose} aria-hidden="true" />
+      )}
 
-      <nav className="sidebar__nav">
-        {NAV_ITEMS.map((item) =>
-          item.to ? (
-            <NavLink
-              key={item.label}
-              to={item.to}
-              className={({ isActive }) =>
-                'sidebar__link' + (isActive ? ' sidebar__link--active' : '')
-              }
-            >
-              {item.label}
-            </NavLink>
-          ) : (
-            <button
-              key={item.label}
-              type="button"
-              className="sidebar__link sidebar__link--inert"
-              onClick={() => toast.info('Coming in a future step')}
-            >
-              {item.label}
-            </button>
-          )
-        )}
-      </nav>
+      <aside className={`sidebar${isOpen ? ' sidebar--open' : ''}`}>
+        <div className="sidebar__brand">
+          <img src={logoIcon} alt="Kanban" />
+          <span>KANBAN</span>
+        </div>
 
-      <div className="sidebar__footer">
-        <NavLink
-          to="/settings"
-          className={({ isActive }) =>
-            'sidebar__link' + (isActive ? ' sidebar__link--active' : '')
-          }
-        >
-          Settings
-        </NavLink>
-        <button type="button" className="sidebar__link" onClick={handleLogout}>
-          Log Out
-        </button>
-      </div>
-    </aside>
+        <nav className="sidebar__nav">
+          {NAV_ITEMS.map((item) =>
+            item.to ? (
+              <NavLink
+                key={item.label}
+                to={item.to}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  'sidebar__link' + (isActive ? ' sidebar__link--active' : '')
+                }
+              >
+                {item.label}
+              </NavLink>
+            ) : (
+              <button
+                key={item.label}
+                type="button"
+                className="sidebar__link sidebar__link--inert"
+                onClick={() => toast.info('Coming in a future step')}
+              >
+                {item.label}
+              </button>
+            )
+          )}
+        </nav>
+
+        <div className="sidebar__footer">
+          <NavLink
+            to="/settings"
+            onClick={onClose}
+            className={({ isActive }) =>
+              'sidebar__link' + (isActive ? ' sidebar__link--active' : '')
+            }
+          >
+            Settings
+          </NavLink>
+          <button type="button" className="sidebar__link" onClick={handleLogout}>
+            Log Out
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }
 

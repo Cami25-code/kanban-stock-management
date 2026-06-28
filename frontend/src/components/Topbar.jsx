@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { currentUserState } from '../state/atoms';
 import './Topbar.css';
 
-function Topbar({ onSearch }) {
+function Topbar({ onSearch, onMenuClick }) {
   const currentUser = useRecoilValue(currentUserState);
   const [searchValue, setSearchValue] = useState('');
 
@@ -15,6 +15,14 @@ function Topbar({ onSearch }) {
 
   return (
     <header className="topbar">
+      <button
+        type="button"
+        className="topbar__hamburger"
+        onClick={onMenuClick}
+        aria-label="Open navigation menu"
+      >
+        ☰
+      </button>
       <input
         type="text"
         className="topbar__search"
