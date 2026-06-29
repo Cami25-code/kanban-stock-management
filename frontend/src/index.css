@@ -1,7 +1,13 @@
 :root {
-  --color-primary: #314ED3;
-  --color-primary-hover: #2840B8;
+  --color-primary: #3b5bdb;
+  --color-primary-hover: #324DBA;
   --color-primary-foreground: #FFFFFF;
+  --bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --border: #E5E7EB;
+  --text: #111827;
+  --text-muted: #6B7280;
+  --text-placeholder: #9CA3AF;
 }
 
 body {

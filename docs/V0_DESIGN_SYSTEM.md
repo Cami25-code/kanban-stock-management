@@ -2,95 +2,101 @@
 
 > Référence **autoritaire** que v0 doit respecter pour produire l'UI mobile.
 > Rappel de rôle (`AI_TEAM_GUIDE`) : **v0 propose** des composants UI isolés. **Claude Code intègre et adapte** au projet. v0 ne touche jamais à `main`.
-> Toutes les valeurs ci-dessous sont **extraites de la démo réelle** (couleurs échantillonnées au pixel), pas inventées.
-> À lire avec `RESPONSIVE_SPEC.md`, qui définit le comportement écran par écran.
+> Couleurs **extraites de la démo réelle** + **valeurs confirmées dans le code** par Claude Code.
+> À lire avec `RESPONSIVE_SPEC.md` (comportement écran par écran).
+
+---
+
+## 0. Stack & intégration (confirmé dans le code)
+
+- **CSS vanilla** (Create React App). **Pas de Tailwind**, pas de CSS-in-JS.
+- Les tokens sont des **CSS custom properties** dans `src/index.css` (`:root { --color-primary: … }`).
+- **Police : `system-ui`** (stack CRA par défaut `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto'…`). Aucune police custom chargée — l'aspect « Inter-like » de la démo vient de SF Pro (iOS) / Roboto (Android).
+- **v0 doit livrer du HTML + CSS vanilla** (fichier `.css` + `className`), stylé via les **variables CSS** ci-dessous. Pas de classes Tailwind. Claude Code greffe sur les composants existants (`AppLayout`, `Topbar`, `Modal`, `DataPage`, `Availability`).
 
 ---
 
 ## 1. Couleurs
 
-Couche **sémantique** (à utiliser) mappée sur des valeurs **grounded** (mesurées) + équivalent Tailwind pour usage direct.
+Déclarées comme variables CSS. Valeurs **grounded** (mesurées) recalées sur le **code réel**.
 
 ### 1.1 Marque / Primaire
-| Token | Hex | Usage |
+| Variable | Hex | Usage |
 |---|---|---|
-| `--color-primary` | **`#314ED3`** | Boutons primaires, liens, état actif, focus |
-| `--color-primary-hover` | `#2840B8` | État pressé/hover du primaire |
+| `--color-primary` | **`#3b5bdb`** | Boutons primaires, liens, état actif, focus |
+| `--color-primary-hover` | `#324DBA` | État pressé/hover |
 | `--color-primary-foreground` | `#FFFFFF` | Texte sur fond primaire |
 
-→ Couleur **custom**. ⚠️ **Le projet n'utilise pas Tailwind** (aucun `tailwind.config`, CSS vanilla uniquement). Les tokens sont déclarés comme **CSS custom properties** dans `src/index.css` (`:root { --color-primary: #314ED3; … }`). Le code existant utilise `#3b5bdb` (bleu légèrement différent) — la migration vers `--color-primary` se fait progressivement lors de l'intégration mobile. Le logo KANBAN utilise un bleu cyan + une coche verte : **décoratif, réservé au logo**, pas un token d'UI.
+→ Valeur **canonique = `#3b5bdb`** (celle déjà utilisée dans le code ; l'échantillon `#314ED3` en était une approximation au pixel). Une seule source de vérité, **aucune migration de couleur** sur le desktop. Le logo KANBAN (bleu cyan + coche verte) est **décoratif**, pas un token d'UI.
 
 ### 1.2 Neutres
-| Token | Hex | Tailwind | Usage |
+| Variable | Hex | Usage |
+|---|---|---|
+| `--bg` | `#FFFFFF` | Fond de page |
+| `--surface` | `#FFFFFF` | Fond des cartes (+ bordure) |
+| `--border` | `#E5E7EB` | Bordures cartes/champs |
+| `--text` | `#111827` | Texte principal |
+| `--text-muted` | `#6B7280` | Labels, sous-titres |
+| `--text-placeholder` | `#9CA3AF` | Placeholders |
+
+### 1.3 Statuts (badges)
+Badge = **fond pâle + texte foncé**. **Déjà implémenté** dans `styles/Availability.css` (`.availability--in / --low / --out`) — à réutiliser tel quel, conforme au §4.4 du `RESPONSIVE_SPEC`.
+
+| Sens | Texte | Fond | Mots-clés |
 |---|---|---|---|
-| `--bg` | `#FFFFFF` | white | Fond de page |
-| `--surface` | `#FFFFFF` | white | Fond des cartes (+ bordure) |
-| `--border` | `#E5E7EB` | gray-200 | Bordures cartes/champs |
-| `--text` | `#111827` | gray-900 | Texte principal |
-| `--text-muted` | `#6B7280` | gray-500 | Labels, sous-titres |
-| `--text-placeholder` | `#9CA3AF` | gray-400 | Placeholders |
+| Positif | `#15803D` | `#DCFCE7` | In stock, Delivered, Taking return |
+| Attention | `#B45309` | `#FEF3C7` | Low stock, Out for delivery, Confirmed |
+| Négatif | `#B91C1C` | `#FEE2E2` | Out of stock, Not taking return, Returned, Delayed |
 
-### 1.3 Statuts (badges — voir §4.4 du RESPONSIVE_SPEC)
-Badge = **fond pâle + texte foncé** de la même teinte.
-
-| Sens | Texte | Fond | Tailwind | Mots-clés |
-|---|---|---|---|---|
-| Positif | `#15803D` | `#DCFCE7` | green-700 / green-100 | In stock, Delivered, Taking return |
-| Attention | `#B45309` | `#FEF3C7` | amber-700 / amber-100 | Low stock, Out for delivery, Confirmed |
-| Négatif | `#B91C1C` | `#FEE2E2` | red-700 / red-100 | Out of stock, Not taking return, Returned, Delayed |
-
-*(Teintes mesurées dans la démo : vert ~`#006030`, ambre ~`#D8A848`/`#904800`, rouge ~`#C01818`. Les valeurs Tailwind ci-dessus les normalisent.)*
+*(Teintes mesurées : vert ~`#006030`, ambre ~`#D8A848`/`#904800`, rouge ~`#C01818`.)*
 
 ---
 
 ## 2. Typographie
 
-> ✅ **Police confirmée (Claude Code, 2026-06-29)** : stack système CRA par défaut déclarée dans `src/index.css` — `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', ...`, soit effectivement **system-ui**. Aucune police custom chargée (pas de Google Fonts, pas d'Inter explicite). Le rendu correspond bien à SF Pro sur iOS/macOS et Roboto sur Android, ce qui explique l'aspect "Inter-like" observé dans la démo.
-
-Échelle **mobile** (mobile-first) :
+**Police confirmée : `system-ui`** (voir §0). Échelle **mobile-first** :
 
 | Rôle | Taille | Poids |
 |---|---|---|
 | Titre d'écran / H1 login | 28–30px | 700 |
 | Valeur de stat (gros chiffres) | 20–24px | 700 |
-| Titre de section (H2, ex. « Sales Overview ») | 16–18px | 600 |
+| Titre de section (H2) | 16–18px | 600 |
 | Corps / champs | 14–16px | 400–500 |
 | Label / légende (muted) | 12–13px | 400–500 |
 | Texte de badge | 12px | 500 |
 
-Poids utilisés : 400 (regular), 500 (medium), 600 (semibold), 700 (bold). Pas d'autres graisses.
+Poids : 400 / 500 / 600 / 700. Pas d'autres graisses.
 
 ---
 
 ## 3. Espacement, rayons, élévation
 
-### 3.1 Espacement (base 4px — échelle Tailwind)
+### 3.1 Espacement (base 4px)
 - Padding horizontal d'écran : **16px**
 - Padding interne carte : **16px**
-- Gap entre cartes empilées : **12–16px**
+- Gap entre cartes : **12–16px**
 - Gap entre champs de formulaire : **16px**
 
 ### 3.2 Rayons
-| Élément | Rayon | Tailwind |
-|---|---|---|
-| Boutons, champs, selects | 8px | rounded-lg |
-| Cartes (stat & liste) | 12px | rounded-xl |
-| Badges | pleine | rounded-full |
+| Élément | Rayon |
+|---|---|
+| Boutons, champs, selects | 8px |
+| Cartes (stat & liste) | 12px |
+| Badges | pleine (pill) |
 
-### 3.3 Élévation
-- Cartes : bordure `--border` + ombre **très légère** (`shadow-sm`).
-- Feuilles / modales : ombre marquée (`shadow-xl`) + fond.
+### 3.3 Élévation (box-shadow CSS)
+- Cartes : bordure `--border` + `box-shadow: 0 1px 2px rgba(0,0,0,.05)`.
+- Feuilles / modales : `box-shadow: 0 -8px 24px rgba(0,0,0,.18)`.
 - Bottom tab bar : bordure haute fine, pas d'ombre lourde.
 
 ### 3.4 Cibles tactiles
-- Hauteur minimale interactive : **44px**.
-- Boutons & champs : **48px**.
+- Minimum interactif : **44px**. Boutons & champs : **48px**.
 
 ---
 
 ## 4. Composants
 
-Chaque composant est livré par v0 **isolé**, stylé avec les tokens ci-dessus.
+Livrés par v0 **isolés**, en HTML + CSS vanilla, stylés avec les variables §1.
 
 ### 4.1 Button
 | Variante | Fond | Texte | Bordure |
@@ -99,58 +105,60 @@ Chaque composant est livré par v0 **isolé**, stylé avec les tokens ci-dessus.
 | Secondary | blanc | `--text` | `--border` |
 | Ghost | transparent | `--color-primary` | — |
 | Danger | `#B91C1C` | blanc | — |
-- Hauteur 48px, rounded-lg, label centré 14–16px/600.
-- Dans les formulaires : **pleine largeur**. État `loading` (spinner + disabled) et `disabled` requis.
+- Hauteur 48px, rayon 8px, label centré 14–16px/600.
+- Formulaires : **pleine largeur**. États `loading` (spinner + disabled) et `disabled` requis.
 
 ### 4.2 Input / Select
-- Hauteur 48px, bordure `--border`, rounded-lg, texte 14–16px.
-- **Label au-dessus** (visible, pas seulement placeholder).
+- Hauteur 48px, bordure `--border`, rayon 8px, texte 14–16px.
+- **Label au-dessus** (visible).
 - Focus : anneau `--color-primary`.
 - Erreur : bordure rouge + message inline `#B91C1C` sous le champ.
 
 ### 4.3 Card
-- Fond blanc, bordure `--border`, rounded-xl, padding 16px, `shadow-sm`.
-- Deux usages : **carte de stat** (grille 2 colonnes de tuiles valeur/label) et **carte de liste** (cf. §4.2 du RESPONSIVE_SPEC).
+- Fond blanc, bordure `--border`, rayon 12px, padding 16px, ombre légère (§3.3).
+- Usages : **carte de stat** (grille 2 colonnes valeur/label) et **carte de liste** (§4.2 du RESPONSIVE_SPEC).
 
 ### 4.4 Badge
-- Pill, fond pâle + texte foncé (§1.3), 12px/500, padding `px-2 py-0.5`.
+- Pill, fond pâle + texte foncé (§1.3), 12px/500, padding `2px 8px`.
+- Réutiliser les classes existantes `Availability.css`.
 
-### 4.5 Bottom Tab Bar
+### 4.5 Bottom Tab Bar *(composant neuf)*
 - Fixe en bas, fond blanc, bordure haute `--border`.
 - 4 items (Dashboard · Inventory · Orders · Plus), icône + label court.
-- **Item actif** : icône + label en `--color-primary`.
+- **Item actif** en `--color-primary`.
 - `padding-bottom: env(safe-area-inset-bottom)` **obligatoire**.
 
 ### 4.6 Sheet / Modal (formulaires plein écran)
-- Glisse depuis le bas, plein écran.
-- **Header** : titre + bouton fermer (X) ; fermeture aussi par swipe-down.
-- **Corps** scrollable (champs en une colonne).
-- **Footer épinglé** en bas : Discard / [action primaire], zone du pouce, safe-area.
+- **Étend le `Modal.jsx` existant** (overlay + conteneur), ne le recrée pas.
+- Glisse depuis le bas, plein écran sur mobile.
+- Header : titre + fermer (X) ; fermeture aussi par swipe-down.
+- Corps scrollable (champs en une colonne).
+- Footer **épinglé** : Discard / [action primaire], zone du pouce, safe-area.
+- Les 5 modales (`AddProduct`, `AddOrder`, `AddSupplier`, `AddStore`, `RecordSale`) héritent automatiquement.
 
 ### 4.7 Conteneur de graphique
 - Carte pleine largeur, hauteur 220–260px.
-- Légende **sous** le graphe.
-- **Tooltip au tap** (jamais au hover seul).
+- Légende **sous** le graphe. **Tooltip au tap** (jamais hover seul).
 - Aucun scroll horizontal : réduire la densité des labels d'axe sur mobile.
 
 ---
 
 ## 5. Règles pour v0
 
-1. **Tokens uniquement** : aucune couleur hors palette §1, aucune valeur magique hors échelle §3.
-2. **Mobile-first** : respecter les breakpoints du `RESPONSIVE_SPEC` (`<768 / 768–1024 / ≥1024`), desktop inchangé.
-3. **Comportement** : v0 ne change jamais la logique fonctionnelle — il habille, il ne recâble pas.
-4. **Composants isolés** : livrés prêts à être adaptés par Claude Code, jamais intégrés directement dans `main`.
-5. **Markup propre** : pas de duplication, pas de styles inline arbitraires, classes Tailwind cohérentes avec l'échelle.
-6. **Accessibilité** : cibles ≥ 44px, contrastes suffisants, pas d'info portée par la seule couleur (badge = couleur **+** texte).
+1. **Variables CSS uniquement** : couleurs et valeurs via les tokens §1/§3, **aucune valeur en dur** hors échelle.
+2. **CSS vanilla**, pas de Tailwind, pas de CSS-in-JS.
+3. **Mobile-first** : breakpoints du `RESPONSIVE_SPEC` (`<768 / 768–1024 / ≥1024`), desktop inchangé.
+4. **Comportement** : v0 habille, ne recâble jamais la logique fonctionnelle.
+5. **Composants isolés** : prêts à être adaptés par Claude Code, jamais intégrés dans `main`. Réutiliser l'existant (`Modal`, `Availability`…) plutôt que recréer.
+6. **Accessibilité** : cibles ≥ 44px, contrastes suffisants, info jamais portée par la seule couleur (badge = couleur **+** texte).
 
 ---
 
-## Annexe — Valeurs sources (échantillonnées)
-| Élément | Mesuré |
+## Annexe — Sources & confirmations
+| Élément | Valeur |
 |---|---|
-| Bouton primaire (« Sign in ») | `#314ED3` |
-| Badge négatif (texte/borure) | `#C01818` |
-| Badge positif (texte) | `#006030` |
-| Badge attention | `#D8A848` / `#904800` |
-| Logo (décoratif) | bleu cyan + coche verte |
+| Primaire canonique (code) | `#3b5bdb` |
+| Primaire (échantillon démo) | `#314ED3` (approx.) |
+| Police (code) | `system-ui` (stack CRA) |
+| Badges | déjà dans `styles/Availability.css` |
+| Stack | CRA + CSS vanilla, tokens dans `src/index.css` |

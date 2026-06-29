@@ -17,6 +17,7 @@
 
 @media (max-width: 767px) {
   .app-layout__content {
-    padding: 1rem;
+    /* Extra bottom padding so content never hides under the tab bar */
+    padding: 1rem 1rem calc(56px + env(safe-area-inset-bottom));
   }
 }
