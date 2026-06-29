@@ -99,9 +99,31 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
   font-size: 0.88rem;
   padding: 0.4rem 0;
   border-bottom: 1px solid #f3f4f6;
+}
+
+/* Nom du produit : prend l'espace restant, tronque si trop long */
+.dashboard__low-stock-list li span:first-child {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* "Remaining Quantity : X" : ne se coupe jamais, largeur stable */
+.dashboard__low-stock-list li span:nth-child(2) {
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: #6b7280;
+}
+
+/* Badge (Low stock / In stock…) : ne rétrécit pas */
+.dashboard__low-stock-list li span:last-child {
+  flex-shrink: 0;
 }
 
 @media (max-width: 900px) {
