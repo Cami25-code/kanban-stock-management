@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { toast } from 'sonner';
+import { logout } from '../api/auth';
+import { authTokenState, currentUserState } from '../state/atoms';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 import BottomTabBar from './BottomTabBar';
+import AccountSheet from './AccountSheet';
 import './AppLayout.css';
 
 const ICON_DASHBOARD = (
@@ -56,10 +61,35 @@ const ROUTE_MAP = {
 
 function AppLayout({ children, onSearch }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
+
+  const currentUser = useRecoilValue(currentUserState);
+  const resetAuthToken = useResetRecoilState(authTokenState);
+  const resetCurrentUser = useResetRecoilState(currentUserState);
   const location = useLocation();
   const navigate = useNavigate();
 
   const pathname = location.pathname;
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch {
+      // token cleared client-side regardless
+    }
+    resetAuthToken();
+    resetCurrentUser();
+    toast.success('Logged out successfully');
+  };
+
+  const handleAccountSelect = (key) => {
+    if (key === 'logout') {
+      handleLogout();
+    } else {
+      // 'profile' and 'settings' both resolve to /settings (no separate profile route)
+      navigate('/settings');
+    }
+  };
 
   const tabItems = [
     { key: 'dashboard', label: 'Dashboard', icon: ICON_DASHBOARD, active: pathname === '/' },
@@ -78,15 +108,29 @@ function AppLayout({ children, onSearch }) {
       <div className="app-layout">
         <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
         <div className="app-layout__main">
-          <Topbar onSearch={onSearch} onMenuClick={() => setIsSidebarOpen(true)} />
+          <Topbar
+            onSearch={onSearch}
+            onMenuClick={() => setIsSidebarOpen(true)}
+            onAvatarClick={() => setIsAccountOpen(true)}
+          />
           <main className="app-layout__content">{children}</main>
         </div>
       </div>
+
       <BottomTabBar
         items={tabItems}
         onSelect={handleTabSelect}
         moreItems={MORE_ITEMS}
         onSelectMore={handleTabSelect}
+      />
+
+      {/* AccountSheet rendered here — outside every flex container, same level as BottomTabBar.
+          createPortal inside AccountSheet adds a second layer of safety for iOS Safari. */}
+      <AccountSheet
+        isOpen={isAccountOpen}
+        user={{ name: currentUser?.name || '', email: currentUser?.email || '' }}
+        onSelect={handleAccountSelect}
+        onClose={() => setIsAccountOpen(false)}
       />
     </>
   );
