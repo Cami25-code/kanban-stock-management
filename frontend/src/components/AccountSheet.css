@@ -1,0 +1,143 @@
+/* AccountSheet — vanilla CSS, mobile-first.
+   Same sheet pattern as BottomTabBar. All colors come from global CSS variables. */
+
+.acs {
+  position: fixed;
+  inset: 0;
+  z-index: 110; /* above BottomTabBar (100) */
+  font-family: system-ui, sans-serif;
+}
+
+.acs__overlay {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(17, 24, 39, 0.4);
+  cursor: pointer;
+  animation: acs-fade-in 0.2s ease;
+}
+
+.acs__panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--surface, #ffffff);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  padding: 8px 16px calc(16px + env(safe-area-inset-bottom));
+  box-shadow: 0 -8px 24px rgba(17, 24, 39, 0.12);
+  animation: acs-slide-up 0.25s ease;
+  touch-action: none;
+}
+
+.acs__handle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.acs__grabber {
+  width: 36px;
+  height: 4px;
+  border-radius: 8px;
+  background: var(--border, #e5e7eb);
+}
+
+.acs__close {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--text-muted, #6b7280);
+  cursor: pointer;
+}
+
+/* ---------- Header: user name + email ---------- */
+.acs__header {
+  padding: 4px 8px 12px;
+  border-bottom: 1px solid var(--border, #e5e7eb);
+}
+
+.acs__name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text, #111827);
+}
+
+.acs__email {
+  margin: 2px 0 0;
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--text-muted, #6b7280);
+}
+
+/* ---------- Entries ---------- */
+.acs__list {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0 0;
+}
+
+.acs__entry {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text, #111827);
+  font-family: inherit;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.acs__entry:active {
+  background: var(--bg, #f9fafb);
+}
+
+.acs__entry-icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted, #6b7280);
+  flex-shrink: 0;
+}
+
+.acs__entry--danger {
+  color: #b91c1c;
+}
+
+.acs__entry--danger .acs__entry-icon {
+  color: #b91c1c;
+}
+
+@keyframes acs-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes acs-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
