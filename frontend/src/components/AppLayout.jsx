@@ -74,11 +74,13 @@ function AppLayout({ children, onSearch }) {
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
-      <div className="app-layout__main">
-        <Topbar onSearch={onSearch} onMenuClick={() => setIsSidebarOpen(true)} />
-        <main className="app-layout__content">{children}</main>
+    <>
+      <div className="app-layout">
+        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+        <div className="app-layout__main">
+          <Topbar onSearch={onSearch} onMenuClick={() => setIsSidebarOpen(true)} />
+          <main className="app-layout__content">{children}</main>
+        </div>
       </div>
       <BottomTabBar
         items={tabItems}
@@ -86,7 +88,7 @@ function AppLayout({ children, onSearch }) {
         moreItems={MORE_ITEMS}
         onSelectMore={handleTabSelect}
       />
-    </div>
+    </>
   );
 }
 
