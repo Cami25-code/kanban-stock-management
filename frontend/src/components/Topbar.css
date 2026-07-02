@@ -33,6 +33,11 @@
   justify-content: center;
   font-weight: 600;
   flex-shrink: 0;
+  /* button reset */
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Hamburger — hidden on desktop, visible on mobile */
@@ -53,8 +58,9 @@
     padding: 0.75rem 1rem;
   }
 
+  /* Hamburger removed on mobile — navigation is BottomTabBar + avatar */
   .topbar__hamburger {
-    display: block;
+    display: none;
   }
 
   .topbar__search {

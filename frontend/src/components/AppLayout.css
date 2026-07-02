@@ -17,6 +17,6 @@
 
 @media (max-width: 767px) {
   .app-layout__content {
-    padding: 1rem;
+    padding: 1rem 1rem calc(56px + max(env(safe-area-inset-bottom), 8px));
   }
 }

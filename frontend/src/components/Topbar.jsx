@@ -3,7 +3,11 @@ import { useRecoilValue } from 'recoil';
 import { currentUserState } from '../state/atoms';
 import './Topbar.css';
 
-function Topbar({ onSearch, onMenuClick }) {
+/**
+ * Topbar — header bar with search and account avatar.
+ * Account sheet state is managed by AppLayout; only a callback is needed here.
+ */
+function Topbar({ onSearch, onMenuClick, onAvatarClick }) {
   const currentUser = useRecoilValue(currentUserState);
   const [searchValue, setSearchValue] = useState('');
 
@@ -30,7 +34,15 @@ function Topbar({ onSearch, onMenuClick }) {
         value={searchValue}
         onChange={handleChange}
       />
-      <div className="topbar__avatar">{currentUser?.name?.charAt(0).toUpperCase() || '?'}</div>
+      <button
+        type="button"
+        className="topbar__avatar"
+        onClick={onAvatarClick}
+        aria-label="Account menu"
+        aria-haspopup="dialog"
+      >
+        {currentUser?.name?.charAt(0).toUpperCase() || '?'}
+      </button>
     </header>
   );
 }
