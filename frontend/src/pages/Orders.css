@@ -59,3 +59,18 @@
   color: #6b7280;
   background-color: #f3f4f6;
 }
+
+/* ── Responsive bascule mobile ── */
+.orders-cards {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  /* Hide scroll-wrapper (and its table) on mobile — cards take over */
+  .orders__table-wrap {
+    display: none;
+  }
+  .orders-cards {
+    display: block;
+  }
+}

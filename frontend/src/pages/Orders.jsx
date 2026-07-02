@@ -3,11 +3,22 @@ import { toast } from 'sonner';
 import { getOrders, updateOrderStatus } from '../api/orders';
 import AppLayout from '../components/AppLayout';
 import AddOrderModal from '../components/AddOrderModal';
+import CardList from '../components/CardList';
+import ListCard from '../components/ListCard';
 import { getOrderStatusClass, isFinalStatus } from '../utils/orderStatus';
 import { formatCurrency } from '../utils/currency';
 import { formatDate } from '../utils/date';
 import '../styles/DataPage.css';
 import './Orders.css';
+
+/* Maps order status → ListCard badge tone (spec §4) */
+const STATUS_TONE = {
+  Delivered:          'positive',
+  'Out for delivery': 'warning',
+  Confirmed:          'warning',
+  Delayed:            'negative',
+  Returned:           'negative',
+};
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -71,7 +82,8 @@ function Orders() {
           </div>
         </div>
 
-        <div className="table-scroll-wrapper">
+        {/* ── Desktop (≥768px) : tableau inchangé ── */}
+        <div className="table-scroll-wrapper orders__table-wrap">
           <table className="data-page__table">
             <thead>
               <tr>
@@ -125,6 +137,49 @@ function Orders() {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* ── Mobile (<768px) : même données, rendu cartes ── */}
+        <div className="orders-cards">
+          <CardList
+            loading={isLoading}
+            empty={!isLoading && filteredOrders.length === 0}
+            emptyMessage="No orders yet."
+          >
+            {filteredOrders.map((order) => (
+              <ListCard
+                key={order.id}
+                title={order.product.name}
+                badge={{
+                  label: order.status,
+                  tone: STATUS_TONE[order.status] || 'warning',
+                }}
+                fields={[
+                  { label: 'Order Value', value: formatCurrency(order.order_value) },
+                  {
+                    label: 'Quantity',
+                    value: `${order.quantity}${order.product.unit ? ' ' + order.product.unit : ''}`,
+                  },
+                ]}
+                footnote={`Order #${order.id}`}
+                actions={
+                  !isFinalStatus(order.status)
+                    ? [
+                        {
+                          label: 'Mark as Delivered',
+                          onClick: () => handleStatusChange(order, 'Delivered'),
+                        },
+                        {
+                          label: 'Mark as Returned',
+                          tone: 'negative',
+                          onClick: () => handleStatusChange(order, 'Returned'),
+                        },
+                      ]
+                    : []
+                }
+              />
+            ))}
+          </CardList>
         </div>
 
         <div className="data-page__pagination">
