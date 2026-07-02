@@ -1,14 +1,24 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { getProducts } from '../api/products';
 import AppLayout from '../components/AppLayout';
 import AddProductModal from '../components/AddProductModal';
+import CardList from '../components/CardList';
+import ListCard from '../components/ListCard';
 import { getAvailability } from '../utils/stock';
 import { formatCurrency } from '../utils/currency';
 import { formatDate } from '../utils/date';
 import '../styles/DataPage.css';
 import '../styles/Availability.css';
+import './Inventory.css';
+
+/* Maps getAvailability className → ListCard badge tone */
+const AVAILABILITY_TONE = {
+  'availability--in':  'positive',
+  'availability--low': 'warning',
+  'availability--out': 'negative',
+};
 
 function Inventory() {
   const [products, setProducts] = useState([]);
@@ -16,6 +26,7 @@ function Inventory() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const loadProducts = (page = 1) => {
     setIsLoading(true);
@@ -49,6 +60,7 @@ function Inventory() {
           </button>
         </div>
 
+        {/* ── Desktop (≥768px) : tableau inchangé ── */}
         <table className="data-page__table">
           <thead>
             <tr>
@@ -96,6 +108,42 @@ function Inventory() {
             )}
           </tbody>
         </table>
+
+        {/* ── Mobile (<768px) : même données, rendu cartes ── */}
+        <div className="inventory-cards">
+          <CardList
+            loading={isLoading}
+            empty={!isLoading && filteredProducts.length === 0}
+            emptyMessage="No products yet."
+          >
+            {filteredProducts.map((product) => {
+              const availability = getAvailability(product.quantity, product.threshold);
+              return (
+                <ListCard
+                  key={product.id}
+                  title={product.name}
+                  badge={{
+                    label: availability.label,
+                    tone: AVAILABILITY_TONE[availability.className],
+                  }}
+                  fields={[
+                    { label: 'Buying Price', value: formatCurrency(product.buying_price) },
+                    {
+                      label: 'Quantity',
+                      value: `${product.quantity}${product.unit ? ' ' + product.unit : ''}`,
+                    },
+                    {
+                      label: 'Threshold',
+                      value: `${product.threshold}${product.unit ? ' ' + product.unit : ''}`,
+                    },
+                    { label: 'Expiry', value: formatDate(product.expiry_date) },
+                  ]}
+                  onClick={() => navigate(`/inventory/${product.id}`)}
+                />
+              );
+            })}
+          </CardList>
+        </div>
 
         <div className="data-page__pagination">
           <button

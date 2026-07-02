@@ -1,0 +1,19 @@
+/* Inventory-specific responsive overrides.
+   DataPage.css is unchanged — only Inventory.jsx imports this file. */
+
+/* Cards hidden on desktop by default */
+.inventory-cards {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  /* Hide table on mobile — CardList takes over */
+  .data-page__table {
+    display: none;
+  }
+
+  /* Show card list on mobile */
+  .inventory-cards {
+    display: block;
+  }
+}
