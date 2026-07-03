@@ -1,3 +1,17 @@
+/* ── Responsive bascule mobile ── */
+.suppliers-cards {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .suppliers__table-wrap {
+    display: none;
+  }
+  .suppliers-cards {
+    display: block;
+  }
+}
+
 .supplier-type--yes,
 .supplier-type--no {
   font-weight: 600;

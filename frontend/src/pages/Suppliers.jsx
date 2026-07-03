@@ -3,6 +3,8 @@ import { toast } from 'sonner';
 import { getSuppliers } from '../api/suppliers';
 import AppLayout from '../components/AppLayout';
 import AddSupplierModal from '../components/AddSupplierModal';
+import CardList from '../components/CardList';
+import ListCard from '../components/ListCard';
 import '../styles/DataPage.css';
 import './Suppliers.css';
 
@@ -42,7 +44,8 @@ function Suppliers() {
           </button>
         </div>
 
-        <div className="table-scroll-wrapper">
+        {/* ── Desktop (≥768px) : tableau inchangé ── */}
+        <div className="table-scroll-wrapper suppliers__table-wrap">
           <table className="data-page__table">
             <thead>
               <tr>
@@ -85,6 +88,32 @@ function Suppliers() {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* ── Mobile (<768px) : même données, rendu cartes ── */}
+        <div className="suppliers-cards">
+          <CardList
+            loading={isLoading}
+            empty={!isLoading && filteredSuppliers.length === 0}
+            emptyMessage="No suppliers yet."
+          >
+            {filteredSuppliers.map((supplier) => (
+              <ListCard
+                key={supplier.id}
+                title={supplier.name}
+                badge={{
+                  label: supplier.takes_back_returns ? 'Taking Return' : 'Not Taking Return',
+                  tone: supplier.takes_back_returns ? 'positive' : 'negative',
+                }}
+                fields={[
+                  { label: 'Product', value: supplier.products?.[0]?.name || '-' },
+                  { label: 'On the way', value: String(supplier.on_the_way ?? '-') },
+                  { label: 'Contact', value: supplier.phone || '-' },
+                  { label: 'Email', value: supplier.email },
+                ]}
+              />
+            ))}
+          </CardList>
         </div>
       </div>
 
