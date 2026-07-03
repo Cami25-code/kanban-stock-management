@@ -1,0 +1,254 @@
+/* ============================================================
+   CardList + ListCard — CSS vanilla partagé, mobile-first.
+   Utilise les variables globales (ne les redéfinit pas).
+   Seuls les hex des badges sont en dur (spécifiés par le design).
+   ============================================================ */
+
+/* ---------- Conteneur ---------- */
+.cardlist {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* ---------- Carte ---------- */
+.listcard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  color: var(--text);
+}
+
+.listcard--interactive {
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.listcard--interactive:hover {
+  border-color: var(--color-primary);
+}
+
+.listcard--interactive:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ---------- En-tête : titre + badge / valeur ---------- */
+.listcard__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.listcard__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.listcard__primary-value {
+  flex-shrink: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* ---------- Badges (3 tons, hex spécifiés) ---------- */
+.listcard__badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.listcard__badge--positive {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.listcard__badge--warning {
+  color: #b45309;
+  background: #fef3c7;
+}
+
+.listcard__badge--negative {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+/* ---------- Champs en grille 2 colonnes ---------- */
+.listcard__fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.listcard__fields--single {
+  grid-template-columns: 1fr;
+}
+
+.listcard__field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.listcard__field-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.listcard__field-value {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Footnote ---------- */
+.listcard__footnote {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ---------- Actions ---------- */
+.listcard__actions {
+  display: flex;
+  gap: 12px;
+}
+
+.listcard__action {
+  flex: 1 1 0;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.listcard__action:hover {
+  border-color: var(--color-primary);
+}
+
+.listcard__action:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.listcard__action--negative {
+  color: #b91c1c;
+  border-color: #fee2e2;
+  background: #fee2e2;
+}
+
+.listcard__action--negative:hover {
+  border-color: #b91c1c;
+}
+
+/* ---------- État vide ---------- */
+.cardlist__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 16px;
+  text-align: center;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--text-muted);
+}
+
+.cardlist__empty-icon {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.cardlist__empty-message {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ---------- Skeleton ---------- */
+.cardlist__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.cardlist__skeleton-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cardlist__skeleton-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.cardlist__skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--border) 25%, #f3f4f6 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: cardlist-shimmer 1.4s ease-in-out infinite;
+}
+
+.cardlist__skeleton-line--title {
+  width: 55%;
+  height: 16px;
+}
+
+.cardlist__skeleton-line--pill {
+  width: 72px;
+  height: 22px;
+  border-radius: 999px;
+}
+
+@keyframes cardlist-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardlist__skeleton-line {
+    animation: none;
+  }
+}
